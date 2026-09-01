@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">SD</span>
+    <span>
+      <strong>Sunrise Dental Clinic</strong>
+      <small>Appointment &amp; Patient Management</small>
+    </span>
+  </div>
+  <nav>
+    <a href="/help.html">Help</a>
+    <a class="button" href="/login.html">Sign in</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Appointments, patients and billing in one place.</h1>
+    <p>
+      Replacing paper files and notebooks with a system that prevents double bookings,
+      keeps patient records safe, and prints an accurate bill every time.
+    </p>
+    <p class="status" id="status" role="status">Checking server&hellip;</p>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2>Book an appointment</h2>
+      <p>Pick a dentist, treatment, date and time. The system refuses a slot that is already
+        taken and suggests the next free one.</p>
+      <p class="tag">Milestone&nbsp;3</p>
+    </article>
+    <article class="card">
+      <h2>Find a patient</h2>
+      <p>Search by appointment number to bring up the full patient and treatment record.</p>
+      <p class="tag">Milestone&nbsp;3</p>
+    </article>
+    <article class="card">
+      <h2>Calculate and print a bill</h2>
+      <p>Consultation fee plus treatment charge, itemised, with a printable receipt.</p>
+      <p class="tag">Milestone&nbsp;4</p>
+    </article>
+    <article class="card">
+      <h2>Management reports</h2>
+      <p>Daily operations, revenue by treatment, dentist workload and patient visit history.</p>
+      <p class="tag">Milestone&nbsp;4</p>
+    </article>
+  </section>
+
+  <section class="note">
+    <h2>About this build</h2>
+    <p>
+      Written in plain Java against the JDK. The HTTP server, router, filter chain,
+      dependency-injection container, JSON codec, session store and connection pool are all
+      hand-written &mdash; no Spring, Hibernate, Thymeleaf, React or Bootstrap. The only
+      external artifacts are the MySQL JDBC driver and JUnit, and JUnit is test-scope only.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>CIS6003 Advanced Programming &middot; WRIT1 &middot; ICBT Campus</p>
+</footer>
+
+<script>
+  // Vanilla fetch, no library. Confirms the JDK HttpServer is answering.
+  fetch('/health')
+    .then(function (response) {
+      if (!response.ok) { throw new Error('HTTP ' + response.status); }
+      return response.json();
+    })
+    .then(function (health) {
+      var el = document.getElementById('status');
+      el.textContent = 'Server ' + health.status + ' · version ' + health.version
+        + ' · up ' + health.uptimeSeconds + 's';
+      el.classList.add('ok');
+    })
+    .catch(function (error) {
+      var el = document.getElementById('status');
+      el.textContent = 'Server unreachable: ' + error.message;
+      el.classList.add('bad');
+    });
+</script>
+
+</body>
+</html>

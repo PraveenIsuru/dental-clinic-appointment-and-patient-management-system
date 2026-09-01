@@ -1,0 +1,28 @@
+# Build output
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Local configuration - credentials must never be committed.
+# Commit config/application.properties.example instead.
+config/application.properties
+
+# Friend's reference project - kept locally for domain reference only.
+# See my-docs/PROJECT-PLAN.md section 2 (academic-integrity note).
+SunriseDentalClinic/
+
+# Course working documents. The assessment brief is copyrighted material.
+# To publish the UML sources, uncomment the two negations below.
+my-docs/
+#!my-docs/task-a/
+#!my-docs/task-a/**
+
+# IDE and OS
+.idea/
+*.iml
+.vscode/
+nbproject/private/
+.DS_Store
+Thumbs.db
+
