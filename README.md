@@ -106,19 +106,6 @@ mvn test
 The suite drives a **real server over real HTTP** using `java.net.http.HttpClient` — no MockMvc
 and no mocking library. Tests bind port 0 so they never collide with a development instance.
 
-## Milestone status
-
-| # | Milestone | Status |
-|---|---|---|
-| M1 | Design & foundation (Task A) | 🔨 in progress — skeleton and HTTP layer done |
-| M2 | Data tier, authentication, sessions | ⬜ |
-| M3 | Appointments | ⬜ |
-| M4 | Billing & reports | ⬜ |
-| M5 | Web services & test automation (Task C) | ⬜ |
-| M6 | CI/CD, deployment & report (Task D) | ⬜ |
-
-Full plan, assumptions and marking-grid mapping: `my-docs/PROJECT-PLAN.md`.
-
 ## Acknowledgement
 
 The initial database table shapes and the treatment price list were adapted from a peer's JavaFX
