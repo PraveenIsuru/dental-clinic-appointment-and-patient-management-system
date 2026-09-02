@@ -25,8 +25,12 @@ public record ClinicSettings(BigDecimal consultationFee,
                              LocalTime opensAt,
                              LocalTime closesAt,
                              int slotMinutes,
+                             int maxUpcomingBookings,
                              String clinicName,
                              String clinicAddress) {
+
+    /** Used when the database predates V5__booking_limit.sql. */
+    public static final int DEFAULT_MAX_UPCOMING = 3;
 
     public static ClinicSettings load(SettingsDao settings) {
         return new ClinicSettings(
@@ -36,6 +40,10 @@ public record ClinicSettings(BigDecimal consultationFee,
                 settings.requireTime("clinic.open"),
                 settings.requireTime("clinic.close"),
                 settings.requireInt("slot.minutes"),
+                // Defaulted rather than required: an installation whose database predates
+                // V5 must still start, and 3 is the value V5 seeds anyway.
+                settings.find("booking.max.upcoming")
+                        .map(Integer::parseInt).orElse(DEFAULT_MAX_UPCOMING),
                 settings.require("clinic.name"),
                 settings.require("clinic.address"));
     }

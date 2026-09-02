@@ -31,7 +31,7 @@ class AppointmentValidatorTest {
 
     private static final ClinicSettings SETTINGS = new ClinicSettings(
             new BigDecimal("2500.00"), BigDecimal.ZERO, new BigDecimal("25.00"),
-            LocalTime.of(8, 0), LocalTime.of(20, 0), 30,
+            LocalTime.of(8, 0), LocalTime.of(20, 0), 30, 3,
             "Sunrise Dental Clinic", "221 Galle Road, Colombo 03");
 
     private static final Dentist DENTIST = Dentist.builder()

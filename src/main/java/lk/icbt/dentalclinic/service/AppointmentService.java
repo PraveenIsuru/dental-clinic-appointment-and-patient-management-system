@@ -95,6 +95,8 @@ public final class AppointmentService {
             throw new ValidationException(validation);
         }
 
+        requireWithinBookingLimit(request, actor, settings);
+
         // Optimistic check: produces the friendly message with suggestions. It can be
         // overtaken by a concurrent booking, which the catch block below handles.
         requireSlotFree(request.dentistId(), request.appointmentDate(),
@@ -135,6 +137,43 @@ public final class AppointmentService {
         // transaction a listener could act on a booking about to be rolled back.
         eventBus.publish(AppointmentBookedEvent.of(booked, actor.getUsername()));
         return booked;
+    }
+
+    /**
+     * Refuses a patient who already holds the maximum number of upcoming appointments.
+     *
+     * <p>Without this one person can reserve a dentist's whole week from the self-service
+     * portal and cancel the day before, and every slot they hold is a slot somebody who
+     * needs it cannot book.
+     *
+     * <p><strong>Staff are exempt.</strong> A receptionist booking a course of six
+     * treatments for one patient is doing their job, not hoarding slots. The rule is about
+     * unsupervised self-service, so it applies to the role that has it.
+     *
+     * <p>Cancelled and past appointments do not count — {@code countUpcomingForPatient}
+     * counts only BOOKED and CONFIRMED from today onwards, so cancelling frees the
+     * allowance immediately.
+     */
+    private void requireWithinBookingLimit(BookingRequest request, Session actor,
+                                           ClinicSettings settings) {
+        if (actor.getRole() != lk.icbt.dentalclinic.model.RoleCode.PATIENT) {
+            return;
+        }
+        Integer patientId = request.isForExistingPatient()
+                ? request.patientId()
+                : patientIdFor(actor).orElse(null);
+        if (patientId == null) {
+            return;
+        }
+
+        long upcoming = appointmentDao.countUpcomingForPatient(patientId);
+        int limit = settings.maxUpcomingBookings();
+
+        if (upcoming >= limit) {
+            throw new BookingNotAllowedException(
+                    "You already have " + limit + " upcoming appointments, which is the most "
+                            + "we can hold for one patient. Cancel one, or telephone the clinic.");
+        }
     }
 
     /** Creates the patient record when the booking carries typed details rather than an id. */
@@ -182,6 +221,17 @@ public final class AppointmentService {
                     .map(p -> appointmentDao.findByPatientDetailed(p.getId()))
                     .orElseGet(List::of);
         };
+    }
+
+    /**
+     * The patient record belonging to a signed-in patient, if there is one.
+     *
+     * <p>Used wherever a patient acts on their own behalf, so the id always comes from the
+     * session and never from the request. A patient cannot book, or read, in another
+     * patient's name by editing a field.
+     */
+    public Optional<Integer> patientIdFor(Session actor) {
+        return patientDao.findByUserId(actor.getUserId()).map(Patient::getId);
     }
 
     public List<Appointment> upcomingFor(Session actor, int limit) {

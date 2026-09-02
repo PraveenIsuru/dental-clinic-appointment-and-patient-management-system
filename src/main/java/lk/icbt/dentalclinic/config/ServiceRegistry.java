@@ -32,6 +32,7 @@ import lk.icbt.dentalclinic.service.AppointmentService;
 import lk.icbt.dentalclinic.service.AuthService;
 import lk.icbt.dentalclinic.service.BillingService;
 import lk.icbt.dentalclinic.service.pricing.PricingStrategyFactory;
+import lk.icbt.dentalclinic.service.RecordsService;
 import lk.icbt.dentalclinic.service.RegistrationService;
 import lk.icbt.dentalclinic.web.TemplateEngine;
 
@@ -89,6 +90,7 @@ public final class ServiceRegistry {
     private final AppointmentService appointmentService;
     private final PricingStrategyFactory pricingStrategyFactory;
     private final BillingService billingService;
+    private final RecordsService recordsService;
 
     // Presentation tier
     private final TemplateEngine templateEngine;
@@ -134,6 +136,8 @@ public final class ServiceRegistry {
         this.billingService = new BillingService(billDao, appointmentDao, patientDao,
                 settingsDao, pricingStrategyFactory, appointmentAccessPolicy,
                 transactionManager, eventBus);
+        this.recordsService = new RecordsService(patientDao, dentistDao, treatmentDao,
+                transactionManager);
 
         this.templateEngine = new TemplateEngine(config.isDevelopment());
     }
@@ -232,6 +236,10 @@ public final class ServiceRegistry {
 
     public BillingService billingService() {
         return billingService;
+    }
+
+    public RecordsService recordsService() {
+        return recordsService;
     }
 
     public TemplateEngine templateEngine() {

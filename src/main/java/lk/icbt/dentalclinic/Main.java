@@ -22,6 +22,10 @@ import lk.icbt.dentalclinic.web.handler.RecordsHandler;
 import lk.icbt.dentalclinic.web.handler.RegisterHandler;
 import lk.icbt.dentalclinic.web.handler.ReportsHandler;
 import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
+import lk.icbt.dentalclinic.web.handler.api.AppointmentApiHandler;
+import lk.icbt.dentalclinic.web.handler.api.BillApiHandler;
+import lk.icbt.dentalclinic.web.handler.api.CatalogApiHandler;
+import lk.icbt.dentalclinic.web.handler.api.SessionApiHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -132,6 +136,16 @@ public final class Main {
         ReportsHandler reports = new ReportsHandler(registry.reportDao(), registry.patientDao(),
                 registry.notificationListener(), view);
 
+        // --- REST API, Task B requirement (i) ------------------------------
+        // The same service objects the pages use, so there is one set of business
+        // rules with two entry points rather than two implementations.
+        AppointmentApiHandler appointmentApi =
+                new AppointmentApiHandler(registry.appointmentService());
+        CatalogApiHandler catalogApi = new CatalogApiHandler(registry.dentistDao(),
+                registry.treatmentDao(), registry.patientDao());
+        BillApiHandler billApi =
+                new BillApiHandler(registry.billingService(), registry.reportDao());
+
         RecordsHandler patients = records(registry, RecordsHandler.Kind.PATIENTS, view);
         RecordsHandler dentists = records(registry, RecordsHandler.Kind.DENTISTS, view);
         RecordsHandler treatments = records(registry, RecordsHandler.Kind.TREATMENTS, view);
@@ -183,6 +197,35 @@ public final class Main {
                 .get("/admin/reports", reports)
                 .get("/patient/history", reports.myHistory())
 
+                // ---------------------------------------------------------------
+                // REST API v1. Literal segments before {parameter} ones, as above.
+                // ---------------------------------------------------------------
+                // The reference is a static page; this alias gives it the extensionless
+                // address the documentation and the Postman collection both cite.
+                .get("/api-docs", ex -> lk.icbt.dentalclinic.web.Responses
+                        .redirect(ex, "/api-docs.html"))
+
+                .get("/api/v1/session", SessionApiHandler.current())
+
+                .get("/api/v1/dentists", catalogApi.dentists())
+                .get("/api/v1/dentists/{id}/availability", appointmentApi.availability())
+                .get("/api/v1/treatments", catalogApi.treatments())
+                .get("/api/v1/patients", catalogApi.patients())
+
+                .get("/api/v1/appointments", appointmentApi.list())
+                .post("/api/v1/appointments", appointmentApi.create())
+                .get("/api/v1/appointments/{no}", appointmentApi.get())
+                .post("/api/v1/appointments/{no}/{action}", appointmentApi.action())
+
+                .get("/api/v1/reports/daily", billApi.dailyReport())
+                .get("/api/v1/reports/revenue", billApi.revenueReport())
+                .get("/api/v1/reports/workload", billApi.workloadReport())
+
+                .get("/api/v1/bills", billApi.list())
+                .post("/api/v1/bills", billApi.create())
+                .get("/api/v1/bills/{no}", billApi.get())
+                .post("/api/v1/bills/{no}/pay", billApi.pay())
+
                 // Administrator record management.
                 .get("/admin/patients", patients)
                 .post("/admin/patients", patients)
@@ -197,7 +240,6 @@ public final class Main {
 
     private static RecordsHandler records(ServiceRegistry registry, RecordsHandler.Kind kind,
                                           View view) {
-        return new RecordsHandler(kind, registry.patientDao(), registry.dentistDao(),
-                registry.treatmentDao(), registry.transactionManager(), view);
+        return new RecordsHandler(kind, registry.recordsService(), view);
     }
 }

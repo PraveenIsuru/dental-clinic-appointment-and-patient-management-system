@@ -34,6 +34,10 @@ import java.util.logging.Logger;
 public final class CsrfFilter implements Filter {
 
     public static final String FIELD = "_csrf";
+
+    /** The header an API client uses instead of a hidden form field. */
+    public static final String HEADER = "X-CSRF-Token";
+
     private static final Logger LOG = Logger.getLogger(CsrfFilter.class.getName());
 
     @Override
@@ -54,13 +58,26 @@ public final class CsrfFilter implements Filter {
             return;
         }
 
-        Map<String, String> form = Requests.form(exchange);
-        String submitted = form.get(FIELD);
+        // An API client sends JSON and has no form field to put the token in, so the
+        // header is accepted too. Reading the header first also avoids consuming the
+        // request body on an API call, which the handler still needs to parse.
+        String submitted = exchange.getRequestHeaders().getFirst(HEADER);
+        if (submitted == null) {
+            Map<String, String> form = Requests.form(exchange);
+            submitted = form.get(FIELD);
+        }
 
         if (!matches(session.getCsrfToken(), submitted)) {
-            LOG.warning(() -> "CSRF token rejected for " + session.getUsername()
-                    + " on " + exchange.getRequestURI().getPath());
-            Responses.html(exchange, 403, Pages.csrfRejected(session.dashboardPath()));
+            String path = exchange.getRequestURI().getPath();
+            LOG.warning(() -> "CSRF token rejected for " + session.getUsername() + " on " + path);
+
+            if (AuthorizationFilter.isApiRequest(path)) {
+                Responses.json(exchange, 403, "{\"error\":\"csrf_failed\",\"message\":"
+                        + "\"Send the token from GET /api/v1/session in the "
+                        + HEADER + " header.\"}");
+            } else {
+                Responses.html(exchange, 403, Pages.csrfRejected(session.dashboardPath()));
+            }
             return;
         }
 

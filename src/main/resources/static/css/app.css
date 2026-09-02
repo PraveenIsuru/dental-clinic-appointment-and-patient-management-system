@@ -504,3 +504,17 @@ body.receipt-page { background: var(--bg); }
 }
 
 .receipt-foot { margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+
+/* ---------- code blocks (API reference) ---------- */
+
+.code-block {
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  background: #10241f;
+  border-radius: var(--radius);
+  color: #dfe9e6;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.code-block code { background: none; color: inherit; padding: 0; }

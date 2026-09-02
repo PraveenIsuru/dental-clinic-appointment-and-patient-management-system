@@ -62,6 +62,11 @@ public final class AccessRules {
                 .permitAll("/css")
                 .permitAll("/js")
                 .permitAll("/favicon.ico")
+                // The API reference and the Postman collection are documentation, not
+                // data: readable without signing in, exactly as Swagger UI would be.
+                .permitAll("/api-docs")
+                .permitAll("/api-docs.html")
+                .permitAll("/postman-collection.json")
                 // --- role-scoped areas ----------------------------------------
                 .require("/admin", RoleCode.ADMIN)
                 .require("/dentist", RoleCode.DENTIST)
@@ -69,7 +74,10 @@ public final class AccessRules {
                 // Shared pages; the handler narrows further per record (A6).
                 .authenticated("/appointments")
                 .authenticated("/bills")
-                .authenticated("/account");
+                .authenticated("/account")
+                // Every API endpoint requires a session. Individual handlers narrow
+                // further by role and by record (A6).
+                .authenticated("/api");
     }
 
     public AccessRules permitAll(String prefix) {

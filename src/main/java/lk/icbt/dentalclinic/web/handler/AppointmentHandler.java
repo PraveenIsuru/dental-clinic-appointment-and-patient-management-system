@@ -8,6 +8,7 @@ import lk.icbt.dentalclinic.model.Appointment;
 import lk.icbt.dentalclinic.model.RoleCode;
 import lk.icbt.dentalclinic.security.Session;
 import lk.icbt.dentalclinic.service.AppointmentService;
+import lk.icbt.dentalclinic.service.BookingNotAllowedException;
 import lk.icbt.dentalclinic.service.BookingRequest;
 import lk.icbt.dentalclinic.service.SlotUnavailableException;
 import lk.icbt.dentalclinic.service.ValidationException;
@@ -173,6 +174,11 @@ public final class AppointmentHandler implements Handler {
         } catch (SlotUnavailableException e) {
             String message = e.getMessage() + Fragments.slotSuggestions(e.suggestions());
             redisplay(exchange, actor, request, form, 409, message, Map.of());
+
+        } catch (BookingNotAllowedException e) {
+            // Clinic policy, not a bad field: nothing the user typed is wrong, so the
+            // message is shown as written rather than attached to an input.
+            redisplay(exchange, actor, request, form, 409, e.getMessage(), Map.of());
         }
     }
 

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API reference &middot; Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">SD</span>
+    <span>
+      <strong>Sunrise Dental Clinic</strong>
+      <small>REST API v1</small>
+    </span>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a class="button ghost" href="/postman-collection.json" download>Postman collection</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>REST API reference</h1>
+    <p>
+      Every business operation the clinic performs is also available as a web service under
+      <code>/api/v1</code>. The browser interface and these endpoints call the same service
+      objects, so a booking made here is validated identically, takes its number from the
+      same stored procedure, and is refused by the same unique index.
+    </p>
+    <p class="status" id="status" role="status">Checking the API&hellip;</p>
+  </section>
+
+  <section class="note">
+    <h2>Authentication</h2>
+    <p>
+      The API uses the same session cookie as the web interface. Sign in with a form POST
+      to <code>/login</code>, keep the <code>SESSIONID</code> cookie, then call
+      <code>GET /api/v1/session</code> to obtain your CSRF token. Send that token in the
+      <code>X-CSRF-Token</code> header on every <code>POST</code>.
+    </p>
+    <p class="muted small">
+      A dedicated API-key scheme would be more conventional for a public API. It was not
+      built because it would be a second authentication path to secure and to test, and
+      this API's clients are the clinic's own tools. Recorded as a deliberate decision
+      rather than an omission.
+    </p>
+  </section>
+
+  <h2 class="section-head">Session</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Method</th><th>Path</th><th>Description</th><th>Roles</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/session</td>
+            <td>The signed-in user and the CSRF token for writes</td><td>any</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-head">Reference data</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Method</th><th>Path</th><th>Description</th><th>Roles</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/dentists</td>
+            <td>Active dentists and their session hours. <code>?all=true</code> includes retired</td>
+            <td>any</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/treatments</td>
+            <td>The treatment catalogue with base prices and durations</td><td>any</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/patients?q=</td>
+            <td>Patient search. A patient receives only their own record</td><td>any</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/dentists/{id}/availability?date=</td>
+            <td>Free slots for one dentist on one date</td><td>any</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-head">Appointments</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Method</th><th>Path</th><th>Description</th><th>Roles</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/appointments?date=</td>
+            <td>Appointments the caller may see. Scoped by role</td><td>any</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/appointments/{no}</td>
+            <td>One appointment in full. <strong>404</strong> if it is not yours</td><td>any</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/appointments</td>
+            <td>Book. <strong>201</strong> with <code>Location</code>, or <strong>409</strong>
+                with free-slot suggestions</td><td>any</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/appointments/{no}/cancel</td>
+            <td>Cancel; the slot becomes bookable again</td><td>any</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/appointments/{no}/confirm</td>
+            <td>Confirm</td><td>ADMIN, DENTIST</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/appointments/{no}/complete</td>
+            <td>Mark the treatment complete, which makes it billable</td><td>ADMIN, DENTIST</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-head">Billing</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Method</th><th>Path</th><th>Description</th><th>Roles</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/bills?date=</td>
+            <td>Bills the caller may see</td><td>ADMIN, PATIENT</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/bills/{no}</td>
+            <td>One bill, itemised</td><td>ADMIN, PATIENT</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/bills</td>
+            <td>Issue a bill for a completed appointment</td><td>ADMIN</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/api/v1/bills/{no}/pay</td>
+            <td>Record payment</td><td>ADMIN</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-head">Reports</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Method</th><th>Path</th><th>Backed by</th><th>Roles</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/reports/daily?date=</td>
+            <td>Conditional aggregation over the day's appointments</td><td>ADMIN</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/reports/revenue?date=</td>
+            <td class="mono">sp_daily_revenue_report</td><td>ADMIN</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/api/v1/reports/workload</td>
+            <td class="mono">vw_dentist_workload</td><td>ADMIN</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-head">Status codes</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">200</td><td>OK</td></tr>
+        <tr><td class="mono">201</td><td>Created, with a <code>Location</code> header</td></tr>
+        <tr><td class="mono">400</td><td>The body is not valid JSON</td></tr>
+        <tr><td class="mono">401</td><td>Not signed in</td></tr>
+        <tr><td class="mono">403</td><td>Signed in, but the role or CSRF token is wrong</td></tr>
+        <tr><td class="mono">404</td><td>No such resource &mdash; <em>or it is not yours</em></td></tr>
+        <tr><td class="mono">409</td><td>Conflict: slot taken, already billed, wrong status</td></tr>
+        <tr><td class="mono">422</td><td>Well-formed, but a field failed validation</td></tr>
+        <tr><td class="mono">500</td><td>Logged in full; the response carries no internal detail</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="note">
+    <h2>Why 404 and not 403 for another patient's record</h2>
+    <p>
+      A <code>403</code> confirms that the resource exists. Appointment and bill numbers are
+      sequential, so an attacker could count the clinic's bookings by observing which
+      numbers answer differently. Returning <code>404</code> for both "no such number" and
+      "not yours" leaks nothing. <code>403</code> is reserved for role-level refusals, where
+      nothing is revealed. This is assumption A6 in the design decisions.
+    </p>
+  </section>
+
+  <h2 class="section-head">Worked example</h2>
+  <pre class="code-block"><code># 1. Sign in and keep the cookie
+curl -c jar.txt -X POST -d "username=admin&amp;password=Admin@123" \
+     http://localhost:8080/login
+
+# 2. Fetch the CSRF token
+curl -b jar.txt http://localhost:8080/api/v1/session
+
+# 3. Book an appointment
+curl -b jar.txt -X POST http://localhost:8080/api/v1/appointments \
+     -H "Content-Type: application/json" \
+     -H "X-CSRF-Token: &lt;token from step 2&gt;" \
+     -d '{"patientName":"Kasun Fernando",
+          "address":"14/3 Temple Road, Nugegoda",
+          "contactNumber":"0771234567",
+          "dentistId":1, "treatmentId":2,
+          "date":"2026-10-01", "time":"09:00"}'
+
+# 4. Read it back
+curl -b jar.txt http://localhost:8080/api/v1/appointments/APT-2026-0001</code></pre>
+</main>
+
+<footer>
+  <p>Sunrise Dental Clinic &middot; CIS6003 Advanced Programming</p>
+</footer>
+
+<script>
+  // Vanilla fetch — the API documenting itself as reachable.
+  fetch('/api/v1/session')
+    .then(function (response) {
+      var el = document.getElementById('status');
+      if (response.status === 401) {
+        el.textContent = 'API reachable — not signed in. Sign in to try the endpoints.';
+        el.classList.add('ok');
+        return;
+      }
+      return response.json().then(function (session) {
+        el.textContent = 'Signed in as ' + session.username + ' (' + session.role + ')';
+        el.classList.add('ok');
+      });
+    })
+    .catch(function (error) {
+      var el = document.getElementById('status');
+      el.textContent = 'API unreachable: ' + error.message;
+      el.classList.add('bad');
+    });
+</script>
+
+</body>
+</html>

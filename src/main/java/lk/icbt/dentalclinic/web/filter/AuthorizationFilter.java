@@ -51,6 +51,19 @@ public final class AuthorizationFilter implements Filter {
             return;
         }
 
+        // An API client is sent JSON, not a redirect to a login page it cannot render.
+        // 401 rather than 303 tells it to authenticate; 403 tells it not to bother.
+        if (isApiRequest(path)) {
+            int status = session == null ? 401 : 403;
+            String code = session == null ? "unauthenticated" : "forbidden";
+            String message = session == null
+                    ? "Sign in first; this API uses the session cookie."
+                    : "Your role does not have access to this resource.";
+            Responses.json(exchange, status,
+                    "{\"error\":\"" + code + "\",\"message\":\"" + message + "\"}");
+            return;
+        }
+
         if (session == null) {
             String target = URLEncoder.encode(path, StandardCharsets.UTF_8);
             Responses.redirect(exchange, "/login?next=" + target);
@@ -60,5 +73,10 @@ public final class AuthorizationFilter implements Filter {
         LOG.warning(() -> "Refused " + session.getUsername() + " (" + session.getRole()
                 + ") access to " + path);
         Responses.html(exchange, 403, Pages.forbidden(session.dashboardPath()));
+    }
+
+    /** Whether the request is for the REST API rather than a browser page. */
+    static boolean isApiRequest(String path) {
+        return path.startsWith("/api/");
     }
 }
