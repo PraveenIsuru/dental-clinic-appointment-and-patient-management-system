@@ -1,12 +1,12 @@
-package lk.icbt.dentalclinic.web.dto;
+package lk.dentalclinic.web.dto;
 
-import lk.icbt.dentalclinic.dao.ReportDao;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.Bill;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.web.json.Json;
+import lk.dentalclinic.dao.ReportDao;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.Bill;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.web.json.Json;
 
 /**
  * DTO — the mapping from domain objects to the JSON the API publishes.

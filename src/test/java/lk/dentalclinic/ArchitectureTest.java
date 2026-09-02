@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic;
+package lk.dentalclinic;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 class ArchitectureTest {
 
     private static final Path SOURCE_ROOT = Path.of("src", "main", "java");
-    private static final String BASE = "lk.icbt.dentalclinic";
+    private static final String BASE = "lk.dentalclinic";
     private static final Pattern IMPORT = Pattern.compile("^import\\s+(?:static\\s+)?([\\w.]+)",
             Pattern.MULTILINE);
 

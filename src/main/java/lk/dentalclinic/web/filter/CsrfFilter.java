@@ -1,13 +1,13 @@
-package lk.icbt.dentalclinic.web.filter;
+package lk.dentalclinic.web.filter;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.web.Filter;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Pages;
-import lk.icbt.dentalclinic.web.Requests;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.web.Filter;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Pages;
+import lk.dentalclinic.web.Requests;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

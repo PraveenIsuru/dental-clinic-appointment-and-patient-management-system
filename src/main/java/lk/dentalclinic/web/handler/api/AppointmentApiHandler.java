@@ -1,17 +1,17 @@
-package lk.icbt.dentalclinic.web.handler.api;
+package lk.dentalclinic.web.handler.api;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.service.AppointmentService;
-import lk.icbt.dentalclinic.service.BookingRequest;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Router;
-import lk.icbt.dentalclinic.web.WebContext;
-import lk.icbt.dentalclinic.web.dto.ApiDto;
-import lk.icbt.dentalclinic.web.json.Json;
-import lk.icbt.dentalclinic.web.json.JsonObject;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.service.AppointmentService;
+import lk.dentalclinic.service.BookingRequest;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Router;
+import lk.dentalclinic.web.WebContext;
+import lk.dentalclinic.web.dto.ApiDto;
+import lk.dentalclinic.web.json.Json;
+import lk.dentalclinic.web.json.JsonObject;
 
 import java.io.IOException;
 import java.time.LocalDate;

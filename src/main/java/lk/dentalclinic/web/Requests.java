@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -20,7 +20,7 @@ public final class Requests {
      */
     private static final int MAX_FORM_BYTES = 64 * 1024;
 
-    private static final String FORM_PARAMS = "lk.icbt.dentalclinic.formParams";
+    private static final String FORM_PARAMS = "lk.dentalclinic.formParams";
 
     private Requests() {
     }

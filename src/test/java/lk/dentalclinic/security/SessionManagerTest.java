@@ -1,8 +1,8 @@
-package lk.icbt.dentalclinic.security;
+package lk.dentalclinic.security;
 
-import lk.icbt.dentalclinic.model.Role;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.model.Role;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

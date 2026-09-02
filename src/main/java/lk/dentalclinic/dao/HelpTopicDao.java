@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.HelpTopic;
-import lk.icbt.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.HelpTopic;
+import lk.dentalclinic.model.RoleCode;
 
 import java.util.List;
 

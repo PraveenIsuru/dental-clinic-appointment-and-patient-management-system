@@ -1,16 +1,16 @@
-package lk.icbt.dentalclinic.web.handler.api;
+package lk.dentalclinic.web.handler.api;
 
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.WebContext;
-import lk.icbt.dentalclinic.web.json.Json;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.WebContext;
+import lk.dentalclinic.web.json.Json;
 
 /**
  * {@code GET /api/v1/session} — who the caller is, and the CSRF token they need.
  *
  * <p>The first call any API client makes after signing in. Without it a client
  * authenticated by cookie has no way to obtain the token that
- * {@link lk.icbt.dentalclinic.web.filter.CsrfFilter} requires on every write — the token
+ * {@link lk.dentalclinic.web.filter.CsrfFilter} requires on every write — the token
  * is in the HTML pages, which an API client does not fetch. Publishing it here is the
  * same decision as the {@code <meta>} tag on the web pages, and safe for the same reason:
  * the token defends against a cross-site forgery, and an attacker on another origin
@@ -33,7 +33,7 @@ public final class SessionApiHandler {
                     .put("fullName", session.getFullName())
                     .put("role", session.getRole())
                     .put("csrfToken", session.getCsrfToken())
-                    .put("csrfHeader", lk.icbt.dentalclinic.web.filter.CsrfFilter.HEADER));
+                    .put("csrfHeader", lk.dentalclinic.web.filter.CsrfFilter.HEADER));
         });
     }
 }

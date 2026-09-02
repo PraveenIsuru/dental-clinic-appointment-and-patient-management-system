@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.security;
+package lk.dentalclinic.security;
 
-import lk.icbt.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.RoleCode;
 
 import java.util.ArrayList;
 import java.util.List;

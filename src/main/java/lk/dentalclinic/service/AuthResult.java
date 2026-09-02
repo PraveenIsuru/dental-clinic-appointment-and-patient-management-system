@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.security.Session;
+import lk.dentalclinic.security.Session;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

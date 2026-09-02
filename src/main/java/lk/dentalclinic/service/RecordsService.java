@@ -1,16 +1,16 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.DentistDao;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.dao.TreatmentDao;
-import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.validation.Rules;
-import lk.icbt.dentalclinic.validation.ValidationResult;
+import lk.dentalclinic.dao.DentistDao;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.dao.TreatmentDao;
+import lk.dentalclinic.dao.jdbc.TransactionManager;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.validation.Rules;
+import lk.dentalclinic.validation.ValidationResult;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;

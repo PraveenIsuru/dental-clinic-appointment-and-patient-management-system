@@ -1,16 +1,16 @@
-package lk.icbt.dentalclinic.web.handler;
+package lk.dentalclinic.web.handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.service.RecordsService;
-import lk.icbt.dentalclinic.validation.ValidationResult;
-import lk.icbt.dentalclinic.web.Fragments;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Requests;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.View;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.service.RecordsService;
+import lk.dentalclinic.validation.ValidationResult;
+import lk.dentalclinic.web.Fragments;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Requests;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.View;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -31,7 +31,7 @@ import java.util.Map;
  * request, call one service method, render the result.
  *
  * <p>All three routes sit under {@code /admin}, so
- * {@link lk.icbt.dentalclinic.security.AccessRules} has already refused anyone who is not
+ * {@link lk.dentalclinic.security.AccessRules} has already refused anyone who is not
  * an administrator before this class runs.
  */
 public final class RecordsHandler implements Handler {

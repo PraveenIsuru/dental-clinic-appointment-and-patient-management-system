@@ -1,17 +1,17 @@
-package lk.icbt.dentalclinic.web.handler;
+package lk.dentalclinic.web.handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.config.AppConfig;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.security.SessionManager;
-import lk.icbt.dentalclinic.service.AuthResult;
-import lk.icbt.dentalclinic.service.AuthService;
-import lk.icbt.dentalclinic.web.Cookies;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Requests;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.View;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.config.AppConfig;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.security.SessionManager;
+import lk.dentalclinic.service.AuthResult;
+import lk.dentalclinic.service.AuthService;
+import lk.dentalclinic.web.Cookies;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Requests;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.View;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 import java.util.Map;

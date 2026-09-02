@@ -1,20 +1,20 @@
-package lk.icbt.dentalclinic.web.handler.api;
+package lk.dentalclinic.web.handler.api;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.dao.BusinessRuleViolationException;
-import lk.icbt.dentalclinic.dao.DataAccessException;
-import lk.icbt.dentalclinic.service.AppointmentNotFoundException;
-import lk.icbt.dentalclinic.service.BillNotFoundException;
-import lk.icbt.dentalclinic.service.BillingNotAllowedException;
-import lk.icbt.dentalclinic.service.BookingNotAllowedException;
-import lk.icbt.dentalclinic.service.SlotUnavailableException;
-import lk.icbt.dentalclinic.service.ValidationException;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Requests;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.json.Json;
-import lk.icbt.dentalclinic.web.json.JsonException;
-import lk.icbt.dentalclinic.web.json.JsonObject;
+import lk.dentalclinic.dao.BusinessRuleViolationException;
+import lk.dentalclinic.dao.DataAccessException;
+import lk.dentalclinic.service.AppointmentNotFoundException;
+import lk.dentalclinic.service.BillNotFoundException;
+import lk.dentalclinic.service.BillingNotAllowedException;
+import lk.dentalclinic.service.BookingNotAllowedException;
+import lk.dentalclinic.service.SlotUnavailableException;
+import lk.dentalclinic.service.ValidationException;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Requests;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.json.Json;
+import lk.dentalclinic.web.json.JsonException;
+import lk.dentalclinic.web.json.JsonObject;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.event;
+package lk.dentalclinic.event;
 
 import java.util.ArrayList;
 import java.util.List;

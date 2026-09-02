@@ -61,7 +61,7 @@ CREATE TABLE roles (
 --
 -- password_hash holds a self-describing PBKDF2 string
 --   pbkdf2-sha256$210000$<b64 salt>$<b64 hash>
--- produced by lk.icbt.dentalclinic.security.PasswordHasher. Plaintext
+-- produced by lk.dentalclinic.security.PasswordHasher. Plaintext
 -- and bare digests are never stored - see V3__seed.sql.
 -- ---------------------------------------------------------------------
 CREATE TABLE users (

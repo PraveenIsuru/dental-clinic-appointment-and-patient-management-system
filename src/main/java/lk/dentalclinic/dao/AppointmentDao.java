@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

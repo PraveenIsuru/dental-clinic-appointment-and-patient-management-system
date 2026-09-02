@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.validation;
+package lk.dentalclinic.validation;
 
 import java.util.regex.Pattern;
 

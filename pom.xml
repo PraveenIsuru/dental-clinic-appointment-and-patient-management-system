@@ -21,7 +21,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>lk.icbt</groupId>
+  <groupId>lk</groupId>
   <artifactId>sunrise-clinic</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -31,7 +31,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>
-    <main.class>lk.icbt.dentalclinic.Main</main.class>
+    <main.class>lk.dentalclinic.Main</main.class>
     <mysql.version>9.5.0</mysql.version>
     <junit.version>5.11.4</junit.version>
   </properties>

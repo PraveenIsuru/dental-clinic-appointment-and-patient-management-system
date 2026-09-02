@@ -1,9 +1,9 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.RowMapper;
-import lk.icbt.dentalclinic.dao.TreatmentDao;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.dao.TreatmentDao;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,19 +1,19 @@
-package lk.icbt.dentalclinic.web.handler;
+package lk.dentalclinic.web.handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.dao.DentistDao;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.dao.TreatmentDao;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.service.AppointmentService;
-import lk.icbt.dentalclinic.web.Fragments;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Pages;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.View;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.dao.DentistDao;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.dao.TreatmentDao;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.service.AppointmentService;
+import lk.dentalclinic.web.Fragments;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Pages;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.View;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ import java.util.Optional;
  *
  * <p>One handler serves all three, selecting the template from the session's role rather
  * than trusting anything in the request. A path such as {@code /admin/dashboard} is
- * already restricted by {@link lk.icbt.dentalclinic.security.AccessRules}, but choosing
+ * already restricted by {@link lk.dentalclinic.security.AccessRules}, but choosing
  * the view from the session means that even a routing mistake cannot show a patient the
  * administrator's page.
  *

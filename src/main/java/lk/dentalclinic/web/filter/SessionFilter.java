@@ -1,16 +1,16 @@
-package lk.icbt.dentalclinic.web.filter;
+package lk.dentalclinic.web.filter;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.security.SessionManager;
-import lk.icbt.dentalclinic.web.Cookies;
-import lk.icbt.dentalclinic.web.Filter;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.security.SessionManager;
+import lk.dentalclinic.web.Cookies;
+import lk.dentalclinic.web.Filter;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 
 /**
- * Resolves the {@code SESSIONID} cookie into a {@link lk.icbt.dentalclinic.security.Session}
+ * Resolves the {@code SESSIONID} cookie into a {@link lk.dentalclinic.security.Session}
  * and publishes it on the exchange.
  *
  * <p>This filter only <em>identifies</em>; it never rejects. Authorisation is

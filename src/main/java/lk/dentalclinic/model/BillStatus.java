@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 public enum BillStatus {
     ISSUED,

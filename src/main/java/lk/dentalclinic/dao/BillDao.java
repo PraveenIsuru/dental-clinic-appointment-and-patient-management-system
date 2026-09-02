@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.Bill;
-import lk.icbt.dentalclinic.model.BillLineItem;
+import lk.dentalclinic.model.Bill;
+import lk.dentalclinic.model.BillLineItem;
 
 import java.time.LocalDate;
 import java.util.List;

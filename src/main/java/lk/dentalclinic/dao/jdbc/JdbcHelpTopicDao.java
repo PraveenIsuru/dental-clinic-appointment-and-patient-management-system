@@ -1,9 +1,9 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.HelpTopicDao;
-import lk.icbt.dentalclinic.dao.RowMapper;
-import lk.icbt.dentalclinic.model.HelpTopic;
-import lk.icbt.dentalclinic.model.RoleCode;
+import lk.dentalclinic.dao.HelpTopicDao;
+import lk.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.model.HelpTopic;
+import lk.dentalclinic.model.RoleCode;
 
 import java.util.List;
 

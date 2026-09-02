@@ -1,10 +1,10 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.UserDao;
-import lk.icbt.dentalclinic.model.User;
-import lk.icbt.dentalclinic.security.PasswordHasher;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.security.SessionManager;
+import lk.dentalclinic.dao.UserDao;
+import lk.dentalclinic.model.User;
+import lk.dentalclinic.security.PasswordHasher;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.security.SessionManager;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

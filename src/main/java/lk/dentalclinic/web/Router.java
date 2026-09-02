@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 public final class Router implements HttpHandler {
 
     private static final Logger LOG = Logger.getLogger(Router.class.getName());
-    private static final String PATH_PARAMS = "lk.icbt.dentalclinic.pathParams";
+    private static final String PATH_PARAMS = "lk.dentalclinic.pathParams";
 
     private final List<Route> routes = new ArrayList<>();
     private final List<Filter> filters = new ArrayList<>();

@@ -1,8 +1,8 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.BusinessRuleViolationException;
-import lk.icbt.dentalclinic.dao.DataAccessException;
-import lk.icbt.dentalclinic.dao.DuplicateKeyException;
+import lk.dentalclinic.dao.BusinessRuleViolationException;
+import lk.dentalclinic.dao.DataAccessException;
+import lk.dentalclinic.dao.DuplicateKeyException;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;

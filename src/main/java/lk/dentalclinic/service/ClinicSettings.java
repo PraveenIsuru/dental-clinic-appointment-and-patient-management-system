@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.SettingsDao;
+import lk.dentalclinic.dao.SettingsDao;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;

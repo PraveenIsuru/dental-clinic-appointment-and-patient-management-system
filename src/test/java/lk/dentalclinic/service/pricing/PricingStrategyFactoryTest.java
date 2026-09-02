@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.service.pricing;
+package lk.dentalclinic.service.pricing;
 
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.model.TreatmentFamily;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -106,7 +106,7 @@ class PricingStrategyFactoryTest {
             }
 
             @Override
-            public java.math.BigDecimal priceFor(lk.icbt.dentalclinic.model.Treatment treatment,
+            public java.math.BigDecimal priceFor(lk.dentalclinic.model.Treatment treatment,
                                                  PricingContext context) {
                 return money(treatment.getBaseCost());
             }

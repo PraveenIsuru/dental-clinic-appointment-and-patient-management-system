@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web.json;
+package lk.dentalclinic.web.json;
 
 import java.math.BigDecimal;
 import java.time.temporal.Temporal;

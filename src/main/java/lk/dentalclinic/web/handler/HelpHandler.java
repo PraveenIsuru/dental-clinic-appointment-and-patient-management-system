@@ -1,12 +1,12 @@
-package lk.icbt.dentalclinic.web.handler;
+package lk.dentalclinic.web.handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.dao.HelpTopicDao;
-import lk.icbt.dentalclinic.model.HelpTopic;
-import lk.icbt.dentalclinic.util.Html;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.View;
-import lk.icbt.dentalclinic.web.WebContext;
+import lk.dentalclinic.dao.HelpTopicDao;
+import lk.dentalclinic.model.HelpTopic;
+import lk.dentalclinic.util.Html;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.View;
+import lk.dentalclinic.web.WebContext;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * <p>Public, but role-aware: a signed-in user sees the topics for their role, and a
  * visitor who is not signed in sees only the general ones. That is why
- * {@link lk.icbt.dentalclinic.web.filter.SessionFilter} identifies without
+ * {@link lk.dentalclinic.web.filter.SessionFilter} identifies without
  * authorising — this page needs to know who is reading it without requiring anyone
  * to sign in.
  *

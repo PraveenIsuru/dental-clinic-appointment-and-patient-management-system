@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
 /**
  * Wraps the checked {@link java.sql.SQLException} so that JDBC does not leak into

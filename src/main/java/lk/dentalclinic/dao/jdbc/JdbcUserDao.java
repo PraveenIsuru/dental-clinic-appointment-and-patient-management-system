@@ -1,10 +1,10 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.RowMapper;
-import lk.icbt.dentalclinic.dao.UserDao;
-import lk.icbt.dentalclinic.model.Role;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.dao.UserDao;
+import lk.dentalclinic.model.Role;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

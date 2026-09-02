@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.util;
+package lk.dentalclinic.util;
 
 /** HTML escaping. */
 public final class Html {

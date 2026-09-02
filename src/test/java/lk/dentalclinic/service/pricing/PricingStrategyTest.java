@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.service.pricing;
+package lk.dentalclinic.service.pricing;
 
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

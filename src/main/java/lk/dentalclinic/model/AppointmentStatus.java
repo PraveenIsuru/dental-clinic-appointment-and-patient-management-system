@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 /**
  * Appointment lifecycle: BOOKED -> CONFIRMED -> COMPLETED, with CANCELLED

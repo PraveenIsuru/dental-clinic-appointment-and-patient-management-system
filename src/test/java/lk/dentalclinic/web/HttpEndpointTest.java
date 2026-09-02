@@ -1,8 +1,8 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
-import lk.icbt.dentalclinic.Main;
-import lk.icbt.dentalclinic.web.handler.HealthHandler;
-import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
+import lk.dentalclinic.Main;
+import lk.dentalclinic.web.handler.HealthHandler;
+import lk.dentalclinic.web.handler.StaticFileHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

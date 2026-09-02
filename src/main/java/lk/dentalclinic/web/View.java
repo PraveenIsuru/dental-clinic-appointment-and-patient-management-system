@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.security.Session;
+import lk.dentalclinic.security.Session;
 
 import java.io.IOException;
 import java.time.Year;

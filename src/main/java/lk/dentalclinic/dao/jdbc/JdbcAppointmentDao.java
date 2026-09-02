@@ -1,14 +1,14 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.AppointmentDao;
-import lk.icbt.dentalclinic.dao.DataAccessException;
-import lk.icbt.dentalclinic.dao.RowMapper;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.dao.AppointmentDao;
+import lk.dentalclinic.dao.DataAccessException;
+import lk.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;

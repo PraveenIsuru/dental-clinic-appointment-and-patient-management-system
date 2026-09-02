@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.event;
+package lk.dentalclinic.event;
 
-import lk.icbt.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.Appointment;
 
 import java.time.Instant;
 

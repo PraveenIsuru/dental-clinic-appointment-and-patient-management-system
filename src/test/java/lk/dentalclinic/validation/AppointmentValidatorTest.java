@@ -1,10 +1,10 @@
-package lk.icbt.dentalclinic.validation;
+package lk.dentalclinic.validation;
 
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
-import lk.icbt.dentalclinic.service.BookingRequest;
-import lk.icbt.dentalclinic.service.ClinicSettings;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.service.BookingRequest;
+import lk.dentalclinic.service.ClinicSettings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

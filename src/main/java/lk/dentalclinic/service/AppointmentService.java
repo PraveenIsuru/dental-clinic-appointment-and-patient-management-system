@@ -1,23 +1,23 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.AppointmentDao;
-import lk.icbt.dentalclinic.dao.DentistDao;
-import lk.icbt.dentalclinic.dao.DuplicateKeyException;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.dao.SettingsDao;
-import lk.icbt.dentalclinic.dao.TreatmentDao;
-import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
-import lk.icbt.dentalclinic.event.AppointmentBookedEvent;
-import lk.icbt.dentalclinic.event.EventBus;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.validation.AppointmentValidator;
-import lk.icbt.dentalclinic.validation.Rules;
-import lk.icbt.dentalclinic.validation.ValidationResult;
+import lk.dentalclinic.dao.AppointmentDao;
+import lk.dentalclinic.dao.DentistDao;
+import lk.dentalclinic.dao.DuplicateKeyException;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.dao.SettingsDao;
+import lk.dentalclinic.dao.TreatmentDao;
+import lk.dentalclinic.dao.jdbc.TransactionManager;
+import lk.dentalclinic.event.AppointmentBookedEvent;
+import lk.dentalclinic.event.EventBus;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.validation.AppointmentValidator;
+import lk.dentalclinic.validation.Rules;
+import lk.dentalclinic.validation.ValidationResult;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -156,7 +156,7 @@ public final class AppointmentService {
      */
     private void requireWithinBookingLimit(BookingRequest request, Session actor,
                                            ClinicSettings settings) {
-        if (actor.getRole() != lk.icbt.dentalclinic.model.RoleCode.PATIENT) {
+        if (actor.getRole() != lk.dentalclinic.model.RoleCode.PATIENT) {
             return;
         }
         Integer patientId = request.isForExistingPatient()
@@ -386,7 +386,7 @@ public final class AppointmentService {
         Appointment appointment = findByNumber(appointmentNo, actor);
 
         if (!accessPolicy.canReschedule(appointment, actor)) {
-            throw new IllegalStateException(actor.getRole() == lk.icbt.dentalclinic.model.RoleCode.PATIENT
+            throw new IllegalStateException(actor.getRole() == lk.dentalclinic.model.RoleCode.PATIENT
                     ? "Appointments can only be cancelled online more than 24 hours ahead. "
                       + "Please telephone the clinic."
                     : "This appointment can no longer be cancelled.");
@@ -418,7 +418,7 @@ public final class AppointmentService {
 
     private void changeStatus(String appointmentNo, AppointmentStatus next, Session actor) {
         Appointment appointment = findByNumber(appointmentNo, actor);
-        if (actor.getRole() == lk.icbt.dentalclinic.model.RoleCode.PATIENT) {
+        if (actor.getRole() == lk.dentalclinic.model.RoleCode.PATIENT) {
             throw new IllegalStateException("Only clinic staff can change an appointment's status.");
         }
         applyStatus(appointment, next, actor);

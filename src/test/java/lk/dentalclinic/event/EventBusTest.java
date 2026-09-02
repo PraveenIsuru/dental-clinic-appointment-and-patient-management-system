@@ -1,11 +1,11 @@
-package lk.icbt.dentalclinic.event;
+package lk.dentalclinic.event;
 
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Patient;
 
 import java.util.List;
 import java.util.Optional;

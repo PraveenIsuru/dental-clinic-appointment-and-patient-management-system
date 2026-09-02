@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 /**
  * One entry in the help section - brief requirement 5, "step-by-step instructions

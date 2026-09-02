@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.DataAccessException;
+import lk.dentalclinic.dao.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,18 +1,18 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
-import lk.icbt.dentalclinic.dao.ReportDao;
-import lk.icbt.dentalclinic.event.AppointmentNotificationListener;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
-import lk.icbt.dentalclinic.model.Bill;
-import lk.icbt.dentalclinic.model.BillLineItem;
-import lk.icbt.dentalclinic.model.BillStatus;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.service.AppointmentService.SlotState;
-import lk.icbt.dentalclinic.service.AppointmentService.SlotView;
-import lk.icbt.dentalclinic.util.Html;
+import lk.dentalclinic.dao.ReportDao;
+import lk.dentalclinic.event.AppointmentNotificationListener;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Bill;
+import lk.dentalclinic.model.BillLineItem;
+import lk.dentalclinic.model.BillStatus;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.service.AppointmentService.SlotState;
+import lk.dentalclinic.service.AppointmentService.SlotView;
+import lk.dentalclinic.util.Html;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

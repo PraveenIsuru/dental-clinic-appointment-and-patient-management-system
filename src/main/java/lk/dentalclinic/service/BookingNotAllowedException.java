@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
 /**
  * The booking is well formed and the slot is free, but a clinic policy refuses it.

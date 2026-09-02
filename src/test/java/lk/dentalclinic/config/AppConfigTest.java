@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.config;
+package lk.dentalclinic.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

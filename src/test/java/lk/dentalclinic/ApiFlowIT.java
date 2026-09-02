@@ -1,10 +1,10 @@
-package lk.icbt.dentalclinic;
+package lk.dentalclinic;
 
-import lk.icbt.dentalclinic.config.AppConfig;
-import lk.icbt.dentalclinic.config.ServiceRegistry;
-import lk.icbt.dentalclinic.web.HttpServerBootstrap;
-import lk.icbt.dentalclinic.web.json.Json;
-import lk.icbt.dentalclinic.web.json.JsonObject;
+import lk.dentalclinic.config.AppConfig;
+import lk.dentalclinic.config.ServiceRegistry;
+import lk.dentalclinic.web.HttpServerBootstrap;
+import lk.dentalclinic.web.json.Json;
+import lk.dentalclinic.web.json.JsonObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

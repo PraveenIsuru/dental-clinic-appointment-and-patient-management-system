@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
 /**
  * No appointment with that number is visible to the caller.

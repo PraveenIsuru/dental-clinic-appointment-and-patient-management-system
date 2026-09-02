@@ -1,16 +1,16 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.BillDao;
-import lk.icbt.dentalclinic.dao.RowMapper;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.model.AppointmentStatus;
-import lk.icbt.dentalclinic.model.Bill;
-import lk.icbt.dentalclinic.model.BillLineItem;
-import lk.icbt.dentalclinic.model.BillStatus;
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.dao.BillDao;
+import lk.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.model.AppointmentStatus;
+import lk.dentalclinic.model.Bill;
+import lk.dentalclinic.model.BillLineItem;
+import lk.dentalclinic.model.BillStatus;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 
 import java.time.LocalDate;
 import java.util.List;

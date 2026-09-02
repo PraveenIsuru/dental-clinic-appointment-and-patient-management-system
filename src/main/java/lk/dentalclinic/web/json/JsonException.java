@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web.json;
+package lk.dentalclinic.web.json;
 
 /**
  * The request body was not valid JSON, or a required field was missing.

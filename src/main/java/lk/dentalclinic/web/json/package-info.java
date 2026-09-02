@@ -1,4 +1,4 @@
 /**
  * PRESENTATION TIER - hand-written JSON writer and parser.
  */
-package lk.icbt.dentalclinic.web.json;
+package lk.dentalclinic.web.json;

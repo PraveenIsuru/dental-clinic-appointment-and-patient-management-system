@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.event;
+package lk.dentalclinic.event;
 
 /**
  * OBSERVER — something that reacts to a {@link DomainEvent}.

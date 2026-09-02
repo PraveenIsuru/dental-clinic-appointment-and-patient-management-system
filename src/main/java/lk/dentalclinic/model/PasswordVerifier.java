@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 /**
  * Verifies a candidate password against a stored hash.

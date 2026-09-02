@@ -1,14 +1,14 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.DentistDao;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.model.Appointment;
-import lk.icbt.dentalclinic.security.Session;
+import lk.dentalclinic.dao.DentistDao;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.model.Appointment;
+import lk.dentalclinic.security.Session;
 
 /**
  * Record-level access control — assumption A6.
  *
- * <p>{@link lk.icbt.dentalclinic.security.AccessRules} decides who may reach
+ * <p>{@link lk.dentalclinic.security.AccessRules} decides who may reach
  * {@code /appointments}; this decides which appointments they may see once there. No URL
  * pattern can express "your own", so both are needed and neither substitutes for the
  * other.

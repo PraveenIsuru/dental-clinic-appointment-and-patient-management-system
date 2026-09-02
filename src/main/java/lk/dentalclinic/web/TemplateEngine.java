@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
-import lk.icbt.dentalclinic.util.Html;
+import lk.dentalclinic.util.Html;
 
 import java.io.IOException;
 import java.io.InputStream;

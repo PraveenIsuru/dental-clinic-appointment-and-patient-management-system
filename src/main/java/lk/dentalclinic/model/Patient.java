@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 import java.time.LocalDate;
 import java.time.Period;

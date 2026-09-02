@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

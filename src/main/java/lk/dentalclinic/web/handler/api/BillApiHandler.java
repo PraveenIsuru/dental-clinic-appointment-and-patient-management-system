@@ -1,15 +1,15 @@
-package lk.icbt.dentalclinic.web.handler.api;
+package lk.dentalclinic.web.handler.api;
 
-import lk.icbt.dentalclinic.dao.ReportDao;
-import lk.icbt.dentalclinic.model.Bill;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.service.BillingService;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Router;
-import lk.icbt.dentalclinic.web.WebContext;
-import lk.icbt.dentalclinic.web.dto.ApiDto;
-import lk.icbt.dentalclinic.web.json.Json;
-import lk.icbt.dentalclinic.web.json.JsonObject;
+import lk.dentalclinic.dao.ReportDao;
+import lk.dentalclinic.model.Bill;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.service.BillingService;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Router;
+import lk.dentalclinic.web.WebContext;
+import lk.dentalclinic.web.dto.ApiDto;
+import lk.dentalclinic.web.json.Json;
+import lk.dentalclinic.web.json.JsonObject;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

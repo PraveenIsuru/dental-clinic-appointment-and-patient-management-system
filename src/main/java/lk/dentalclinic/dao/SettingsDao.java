@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;

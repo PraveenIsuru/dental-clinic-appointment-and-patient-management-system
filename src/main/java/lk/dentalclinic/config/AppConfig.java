@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.config;
+package lk.dentalclinic.config;
 
 import java.io.IOException;
 import java.io.InputStream;

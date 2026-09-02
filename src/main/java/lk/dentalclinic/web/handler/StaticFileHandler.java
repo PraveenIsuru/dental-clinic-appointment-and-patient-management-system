@@ -1,9 +1,9 @@
-package lk.icbt.dentalclinic.web.handler;
+package lk.dentalclinic.web.handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.Responses;
-import lk.icbt.dentalclinic.web.Router;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.Responses;
+import lk.dentalclinic.web.Router;
 
 import java.io.IOException;
 import java.io.InputStream;

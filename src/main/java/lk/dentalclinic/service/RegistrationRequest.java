@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
 /**
  * A patient self-registration submission, as typed.

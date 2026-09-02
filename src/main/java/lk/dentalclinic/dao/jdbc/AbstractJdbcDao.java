@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.dao.DataAccessException;
-import lk.icbt.dentalclinic.dao.RowMapper;
+import lk.dentalclinic.dao.DataAccessException;
+import lk.dentalclinic.dao.RowMapper;
 
 import java.math.BigDecimal;
 import java.sql.Connection;

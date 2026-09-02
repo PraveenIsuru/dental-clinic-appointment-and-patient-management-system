@@ -1,8 +1,8 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.Role;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.model.Role;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

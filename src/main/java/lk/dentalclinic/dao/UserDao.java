@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
-import lk.icbt.dentalclinic.security.Session;
+import lk.dentalclinic.security.Session;
 
 import java.util.HashMap;
 import java.util.Map;

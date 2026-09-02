@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.dao.jdbc;
+package lk.dentalclinic.dao.jdbc;
 
-import lk.icbt.dentalclinic.config.AppConfig;
+import lk.dentalclinic.config.AppConfig;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;

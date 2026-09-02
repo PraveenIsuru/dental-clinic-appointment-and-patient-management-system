@@ -1,9 +1,9 @@
-package lk.icbt.dentalclinic.validation;
+package lk.dentalclinic.validation;
 
-import lk.icbt.dentalclinic.model.Dentist;
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.service.BookingRequest;
-import lk.icbt.dentalclinic.service.ClinicSettings;
+import lk.dentalclinic.model.Dentist;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.service.BookingRequest;
+import lk.dentalclinic.service.ClinicSettings;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
 import java.time.LocalTime;
 import java.util.List;

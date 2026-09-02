@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 /** The three roles of assumption A3. RECEPTIONIST is folded into ADMIN (A4). */
 public enum RoleCode {

@@ -1,15 +1,15 @@
-package lk.icbt.dentalclinic.web.handler.api;
+package lk.dentalclinic.web.handler.api;
 
-import lk.icbt.dentalclinic.dao.DentistDao;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.dao.TreatmentDao;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.security.Session;
-import lk.icbt.dentalclinic.web.Handler;
-import lk.icbt.dentalclinic.web.WebContext;
-import lk.icbt.dentalclinic.web.dto.ApiDto;
-import lk.icbt.dentalclinic.web.json.Json;
+import lk.dentalclinic.dao.DentistDao;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.dao.TreatmentDao;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.security.Session;
+import lk.dentalclinic.web.Handler;
+import lk.dentalclinic.web.WebContext;
+import lk.dentalclinic.web.dto.ApiDto;
+import lk.dentalclinic.web.json.Json;
 
 import java.util.List;
 

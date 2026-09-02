@@ -49,7 +49,7 @@ and a `dao` class may never `import com.sun.net.httpserver`. Milestone 5 adds an
 `ArchitectureTest` that scans imports and fails the build on a violation.
 
 ```
-src/main/java/lk/icbt/dentalclinic
+src/main/java/lk/dentalclinic
 ├── Main.java          entry point and routing table
 ├── config/            configuration + DI registry
 ├── model/             domain entities and enums

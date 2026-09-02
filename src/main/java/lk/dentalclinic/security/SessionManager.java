@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.security;
+package lk.dentalclinic.security;
 
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.model.User;
 
 import java.security.SecureRandom;
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.security;
+package lk.dentalclinic.security;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

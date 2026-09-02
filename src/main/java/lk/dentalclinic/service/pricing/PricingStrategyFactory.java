@@ -1,6 +1,6 @@
-package lk.icbt.dentalclinic.service.pricing;
+package lk.dentalclinic.service.pricing;
 
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.model.TreatmentFamily;
 
 import java.util.Collection;
 import java.util.EnumMap;

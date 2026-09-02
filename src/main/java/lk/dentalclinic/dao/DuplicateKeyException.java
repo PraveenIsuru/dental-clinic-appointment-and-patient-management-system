@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.dao;
+package lk.dentalclinic.dao;
 
 /**
  * A unique constraint was violated.

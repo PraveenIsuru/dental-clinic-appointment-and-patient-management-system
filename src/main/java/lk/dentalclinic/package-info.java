@@ -3,4 +3,4 @@
  *
  * <p>CIS6003 WRIT1. Plain Java, no application framework.
  */
-package lk.icbt.dentalclinic;
+package lk.dentalclinic;

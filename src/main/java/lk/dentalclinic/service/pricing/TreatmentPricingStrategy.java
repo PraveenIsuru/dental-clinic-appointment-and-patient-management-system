@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.service.pricing;
+package lk.dentalclinic.service.pricing;
 
-import lk.icbt.dentalclinic.model.Treatment;
-import lk.icbt.dentalclinic.model.TreatmentFamily;
+import lk.dentalclinic.model.Treatment;
+import lk.dentalclinic.model.TreatmentFamily;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,17 +1,17 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
-import lk.icbt.dentalclinic.dao.DuplicateKeyException;
-import lk.icbt.dentalclinic.dao.PatientDao;
-import lk.icbt.dentalclinic.dao.RoleDao;
-import lk.icbt.dentalclinic.dao.UserDao;
-import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
-import lk.icbt.dentalclinic.model.Patient;
-import lk.icbt.dentalclinic.model.Role;
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.model.User;
-import lk.icbt.dentalclinic.security.PasswordHasher;
-import lk.icbt.dentalclinic.validation.Rules;
-import lk.icbt.dentalclinic.validation.ValidationResult;
+import lk.dentalclinic.dao.DuplicateKeyException;
+import lk.dentalclinic.dao.PatientDao;
+import lk.dentalclinic.dao.RoleDao;
+import lk.dentalclinic.dao.UserDao;
+import lk.dentalclinic.dao.jdbc.TransactionManager;
+import lk.dentalclinic.model.Patient;
+import lk.dentalclinic.model.Role;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.User;
+import lk.dentalclinic.security.PasswordHasher;
+import lk.dentalclinic.validation.Rules;
+import lk.dentalclinic.validation.ValidationResult;
 
 import java.util.Optional;
 import java.util.logging.Logger;

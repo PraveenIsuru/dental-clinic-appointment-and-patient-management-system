@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web.json;
+package lk.dentalclinic.web.json;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

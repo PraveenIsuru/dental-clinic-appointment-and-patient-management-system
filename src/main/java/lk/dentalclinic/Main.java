@@ -1,31 +1,31 @@
-package lk.icbt.dentalclinic;
+package lk.dentalclinic;
 
-import lk.icbt.dentalclinic.config.AppConfig;
-import lk.icbt.dentalclinic.config.ServiceRegistry;
-import lk.icbt.dentalclinic.web.HttpServerBootstrap;
-import lk.icbt.dentalclinic.web.Router;
-import lk.icbt.dentalclinic.web.View;
-import lk.icbt.dentalclinic.web.filter.AuthorizationFilter;
-import lk.icbt.dentalclinic.web.filter.CsrfFilter;
-import lk.icbt.dentalclinic.web.filter.LoggingFilter;
-import lk.icbt.dentalclinic.web.filter.SessionFilter;
-import lk.icbt.dentalclinic.web.handler.AppointmentDetailHandler;
-import lk.icbt.dentalclinic.web.handler.AppointmentHandler;
-import lk.icbt.dentalclinic.web.handler.AvailabilityHandler;
-import lk.icbt.dentalclinic.web.handler.BillingHandler;
-import lk.icbt.dentalclinic.web.handler.DashboardHandler;
-import lk.icbt.dentalclinic.web.handler.HealthHandler;
-import lk.icbt.dentalclinic.web.handler.HelpHandler;
-import lk.icbt.dentalclinic.web.handler.LoginHandler;
-import lk.icbt.dentalclinic.web.handler.LogoutHandler;
-import lk.icbt.dentalclinic.web.handler.RecordsHandler;
-import lk.icbt.dentalclinic.web.handler.RegisterHandler;
-import lk.icbt.dentalclinic.web.handler.ReportsHandler;
-import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
-import lk.icbt.dentalclinic.web.handler.api.AppointmentApiHandler;
-import lk.icbt.dentalclinic.web.handler.api.BillApiHandler;
-import lk.icbt.dentalclinic.web.handler.api.CatalogApiHandler;
-import lk.icbt.dentalclinic.web.handler.api.SessionApiHandler;
+import lk.dentalclinic.config.AppConfig;
+import lk.dentalclinic.config.ServiceRegistry;
+import lk.dentalclinic.web.HttpServerBootstrap;
+import lk.dentalclinic.web.Router;
+import lk.dentalclinic.web.View;
+import lk.dentalclinic.web.filter.AuthorizationFilter;
+import lk.dentalclinic.web.filter.CsrfFilter;
+import lk.dentalclinic.web.filter.LoggingFilter;
+import lk.dentalclinic.web.filter.SessionFilter;
+import lk.dentalclinic.web.handler.AppointmentDetailHandler;
+import lk.dentalclinic.web.handler.AppointmentHandler;
+import lk.dentalclinic.web.handler.AvailabilityHandler;
+import lk.dentalclinic.web.handler.BillingHandler;
+import lk.dentalclinic.web.handler.DashboardHandler;
+import lk.dentalclinic.web.handler.HealthHandler;
+import lk.dentalclinic.web.handler.HelpHandler;
+import lk.dentalclinic.web.handler.LoginHandler;
+import lk.dentalclinic.web.handler.LogoutHandler;
+import lk.dentalclinic.web.handler.RecordsHandler;
+import lk.dentalclinic.web.handler.RegisterHandler;
+import lk.dentalclinic.web.handler.ReportsHandler;
+import lk.dentalclinic.web.handler.StaticFileHandler;
+import lk.dentalclinic.web.handler.api.AppointmentApiHandler;
+import lk.dentalclinic.web.handler.api.BillApiHandler;
+import lk.dentalclinic.web.handler.api.CatalogApiHandler;
+import lk.dentalclinic.web.handler.api.SessionApiHandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -202,7 +202,7 @@ public final class Main {
                 // ---------------------------------------------------------------
                 // The reference is a static page; this alias gives it the extensionless
                 // address the documentation and the Postman collection both cite.
-                .get("/api-docs", ex -> lk.icbt.dentalclinic.web.Responses
+                .get("/api-docs", ex -> lk.dentalclinic.web.Responses
                         .redirect(ex, "/api-docs.html"))
 
                 .get("/api/v1/session", SessionApiHandler.current())

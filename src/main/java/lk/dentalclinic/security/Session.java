@@ -1,7 +1,7 @@
-package lk.icbt.dentalclinic.security;
+package lk.dentalclinic.security;
 
-import lk.icbt.dentalclinic.model.RoleCode;
-import lk.icbt.dentalclinic.model.User;
+import lk.dentalclinic.model.RoleCode;
+import lk.dentalclinic.model.User;
 
 import java.time.Duration;
 import java.time.Instant;

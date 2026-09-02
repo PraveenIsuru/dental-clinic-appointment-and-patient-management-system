@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.model;
+package lk.dentalclinic.model;
 
 /**
  * Groups treatments so that PricingStrategyFactory (M4) can resolve one strategy

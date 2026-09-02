@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.service;
+package lk.dentalclinic.service;
 
 /**
  * The bill cannot be issued in this state — the appointment is not completed, one has

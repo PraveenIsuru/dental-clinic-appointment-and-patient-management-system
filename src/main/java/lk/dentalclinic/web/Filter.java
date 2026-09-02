@@ -1,4 +1,4 @@
-package lk.icbt.dentalclinic.web;
+package lk.dentalclinic.web;
 
 import com.sun.net.httpserver.HttpExchange;
 
