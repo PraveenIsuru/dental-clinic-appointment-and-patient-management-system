@@ -1,0 +1,28 @@
+{{>header}}
+
+<section>
+  <div class="page-head">
+    <div>
+      <h1>Bills</h1>
+      {{#if isPatient}}<p class="muted">Your bills — {{count}} in total</p>{{/if}}
+      {{#unless isPatient}}<p class="muted">{{count}} issued on {{date}}</p>{{/unless}}
+    </div>
+    {{#if isStaff}}
+      <div class="actions"><a class="button" href="/bills/new">Generate a bill</a></div>
+    {{/if}}
+  </div>
+
+  {{#if alert}}<p class="alert success" role="status">{{alert}}</p>{{/if}}
+
+  {{#if isStaff}}
+    <form class="inline-form" method="get" action="/bills">
+      <label for="date">Issued on</label>
+      <input id="date" name="date" type="date" value="{{dateIso}}">
+      <button class="button ghost" type="submit">Show</button>
+    </form>
+  {{/if}}
+
+  {{{rows}}}
+</section>
+
+{{>footer}}

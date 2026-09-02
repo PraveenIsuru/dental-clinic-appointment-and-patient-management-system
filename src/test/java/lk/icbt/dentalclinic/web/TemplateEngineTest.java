@@ -107,7 +107,9 @@ class TemplateEngineTest {
                 "dashboard-admin", "dashboard-dentist", "dashboard-patient",
                 "appointments", "appointment-new", "appointment-detail",
                 "appointment-search", "availability",
-                "records-patients", "records-dentists", "records-treatments");
+                "records-patients", "records-dentists", "records-treatments",
+                "bills", "bill-new", "bill-detail", "receipt",
+                "reports", "visit-history");
 
         for (String template : templates) {
             String rendered = engine.render(template, model("signedIn", true,

@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{pageTitle}} &middot; Sunrise Dental Clinic</title>
   <link rel="stylesheet" href="/css/app.css">
+  <!--
+    The CSRF token, available to any page rather than only to pages that happen to
+    render a form. Safe to expose here: the token defends against a *cross-site* forgery,
+    and an attacker on another origin cannot read this document at all. Making it
+    page-wide means a page with no form still has one for a fetch() call, and no template
+    can forget it.
+  -->
+  {{#if signedIn}}<meta name="csrf-token" content="{{csrf}}">{{/if}}
 </head>
 <body>
 

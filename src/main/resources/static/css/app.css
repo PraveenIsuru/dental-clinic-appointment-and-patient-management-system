@@ -420,3 +420,87 @@ table.data .num { text-align: right; }
 details.reveal { margin-top: 1.5rem; }
 details.reveal summary { cursor: pointer; padding: 0.25rem 0; }
 details.reveal[open] summary { margin-bottom: 0.5rem; }
+
+/* ---------- totals tables ---------- */
+
+table.totals { width: 100%; max-width: 22rem; margin-left: auto; margin-top: 1rem; }
+table.totals td { white-space: nowrap; }
+table.totals td:last-child { text-align: right; }
+
+tr.total-row td {
+  border-top: 2px solid var(--line);
+  background: var(--bg);
+  font-size: 1.02rem;
+}
+
+/* ---------- notification list (Observer evidence) ---------- */
+
+.notifications { list-style: none; margin: 1rem 0; padding: 0; }
+.notifications li {
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.notifications .badge { margin-right: 0.4rem; }
+
+/* ---------- receipt (screen view) ---------- */
+
+body.receipt-page { background: var(--bg); }
+
+.receipt {
+  max-width: 42rem;
+  margin: 2rem auto;
+  padding: 2rem 2.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.receipt-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--ink);
+}
+.receipt-head h1 { margin: 0; font-size: 1.3rem; }
+.receipt-meta { text-align: right; }
+.receipt-meta p { margin: 0; }
+
+.receipt-parties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.receipt-parties h2 {
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.receipt-parties p { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+
+.receipt-items { margin-bottom: 0; }
+
+.paid-stamp {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--ok);
+  border-radius: 6px;
+  color: var(--ok);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.receipt-foot { margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--line); }

@@ -1,6 +1,8 @@
 package lk.icbt.dentalclinic.config;
 
 import lk.icbt.dentalclinic.dao.AppointmentDao;
+import lk.icbt.dentalclinic.dao.BillDao;
+import lk.icbt.dentalclinic.dao.ReportDao;
 import lk.icbt.dentalclinic.dao.DentistDao;
 import lk.icbt.dentalclinic.dao.HelpTopicDao;
 import lk.icbt.dentalclinic.dao.PatientDao;
@@ -10,6 +12,8 @@ import lk.icbt.dentalclinic.dao.TreatmentDao;
 import lk.icbt.dentalclinic.dao.UserDao;
 import lk.icbt.dentalclinic.dao.jdbc.ConnectionPool;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcAppointmentDao;
+import lk.icbt.dentalclinic.dao.jdbc.JdbcBillDao;
+import lk.icbt.dentalclinic.dao.jdbc.JdbcReportDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcDentistDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcHelpTopicDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcPatientDao;
@@ -18,12 +22,16 @@ import lk.icbt.dentalclinic.dao.jdbc.JdbcSettingsDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcTreatmentDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcUserDao;
 import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
+import lk.icbt.dentalclinic.event.AppointmentNotificationListener;
+import lk.icbt.dentalclinic.event.EventBus;
 import lk.icbt.dentalclinic.security.AccessRules;
 import lk.icbt.dentalclinic.security.PasswordHasher;
 import lk.icbt.dentalclinic.security.SessionManager;
 import lk.icbt.dentalclinic.service.AppointmentAccessPolicy;
 import lk.icbt.dentalclinic.service.AppointmentService;
 import lk.icbt.dentalclinic.service.AuthService;
+import lk.icbt.dentalclinic.service.BillingService;
+import lk.icbt.dentalclinic.service.pricing.PricingStrategyFactory;
 import lk.icbt.dentalclinic.service.RegistrationService;
 import lk.icbt.dentalclinic.web.TemplateEngine;
 
@@ -64,17 +72,23 @@ public final class ServiceRegistry {
     private final HelpTopicDao helpTopicDao;
     private final SettingsDao settingsDao;
     private final AppointmentDao appointmentDao;
+    private final BillDao billDao;
+    private final ReportDao reportDao;
 
     // Cross-cutting
     private final PasswordHasher passwordHasher;
     private final SessionManager sessionManager;
     private final AccessRules accessRules;
+    private final EventBus eventBus;
+    private final AppointmentNotificationListener notificationListener;
 
     // Business tier
     private final AuthService authService;
     private final RegistrationService registrationService;
     private final AppointmentAccessPolicy appointmentAccessPolicy;
     private final AppointmentService appointmentService;
+    private final PricingStrategyFactory pricingStrategyFactory;
+    private final BillingService billingService;
 
     // Presentation tier
     private final TemplateEngine templateEngine;
@@ -93,10 +107,18 @@ public final class ServiceRegistry {
         this.helpTopicDao = new JdbcHelpTopicDao(connectionPool);
         this.settingsDao = new JdbcSettingsDao(connectionPool);
         this.appointmentDao = new JdbcAppointmentDao(connectionPool);
+        this.billDao = new JdbcBillDao(connectionPool);
+        this.reportDao = new JdbcReportDao(connectionPool);
 
         this.passwordHasher = new PasswordHasher();
         this.sessionManager = SessionManager.getInstance();
         this.accessRules = AccessRules.defaults();
+
+        // OBSERVER: the bus and its listeners are wired here and nowhere else.
+        // AppointmentService publishes without knowing this listener exists.
+        this.eventBus = new EventBus();
+        this.notificationListener = new AppointmentNotificationListener();
+        this.eventBus.subscribe(notificationListener);
 
         this.authService = new AuthService(userDao, passwordHasher, sessionManager);
         this.registrationService = new RegistrationService(
@@ -104,7 +126,14 @@ public final class ServiceRegistry {
         this.appointmentAccessPolicy = new AppointmentAccessPolicy(patientDao, dentistDao);
         this.appointmentService = new AppointmentService(appointmentDao, patientDao,
                 dentistDao, treatmentDao, settingsDao, appointmentAccessPolicy,
-                transactionManager);
+                transactionManager, eventBus);
+
+        // STRATEGY + FACTORY METHOD. Adding a treatment family means adding a strategy
+        // class to withDefaults() -- BillingService is untouched.
+        this.pricingStrategyFactory = PricingStrategyFactory.withDefaults();
+        this.billingService = new BillingService(billDao, appointmentDao, patientDao,
+                settingsDao, pricingStrategyFactory, appointmentAccessPolicy,
+                transactionManager, eventBus);
 
         this.templateEngine = new TemplateEngine(config.isDevelopment());
     }
@@ -181,12 +210,38 @@ public final class ServiceRegistry {
         return appointmentService;
     }
 
+    public BillDao billDao() {
+        return billDao;
+    }
+
+    public ReportDao reportDao() {
+        return reportDao;
+    }
+
+    public EventBus eventBus() {
+        return eventBus;
+    }
+
+    public AppointmentNotificationListener notificationListener() {
+        return notificationListener;
+    }
+
+    public PricingStrategyFactory pricingStrategyFactory() {
+        return pricingStrategyFactory;
+    }
+
+    public BillingService billingService() {
+        return billingService;
+    }
+
     public TemplateEngine templateEngine() {
         return templateEngine;
     }
 
-    /** Releases the pooled connections. Called from the shutdown hook. */
+    /** Releases the pooled connections and the event delivery pool. */
     public void shutdown() {
+        // The bus first: a listener mid-delivery may still need a connection.
+        eventBus.close();
         connectionPool.shutdown();
     }
 }

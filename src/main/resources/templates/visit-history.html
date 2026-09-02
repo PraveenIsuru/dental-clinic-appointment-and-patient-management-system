@@ -1,0 +1,27 @@
+{{>header}}
+
+<section>
+  <div class="page-head">
+    <div>
+      <h1>Visit history</h1>
+      {{#if hasHistory}}
+        <p class="muted">{{historyPatient}} &middot;
+           <span class="mono">{{historyPatientNo}}</span></p>
+      {{/if}}
+    </div>
+    <div class="actions"><a class="button ghost" href="/patient/dashboard">Dashboard</a></div>
+  </div>
+
+  {{#if hasHistory}}
+    {{{historyRows}}}
+    <p class="muted small">
+      Every visit and the bill issued for it. An appointment with no bill is either
+      still upcoming, cancelled, or completed but not yet billed.
+    </p>
+  {{/if}}
+  {{#unless hasHistory}}
+    <p class="muted">No visits recorded yet.</p>
+  {{/unless}}
+</section>
+
+{{>footer}}

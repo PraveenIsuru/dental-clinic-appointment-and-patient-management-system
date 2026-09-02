@@ -1,0 +1,54 @@
+{{>header}}
+
+<section class="narrow-wide">
+  <h1>Generate a bill</h1>
+  <p class="muted">
+    Enter a completed appointment number to see the charge before issuing anything.
+  </p>
+
+  {{#if error}}<p class="alert error" role="alert">{{error}}</p>{{/if}}
+
+  <form class="inline-form" method="get" action="/bills/new">
+    <label for="appointmentNo">Appointment</label>
+    <input id="appointmentNo" name="appointmentNo" value="{{appointmentNo}}"
+           placeholder="APT-2026-0001" required>
+    <label for="quantity">Units</label>
+    <input id="quantity" name="quantity" type="number" min="1" step="1" value="{{quantity}}">
+    <label for="discountPercent">Discount %</label>
+    <input id="discountPercent" name="discountPercent" value="{{discountPercent}}">
+    <button class="button ghost" type="submit">Price it</button>
+  </form>
+
+  {{#if hasQuote}}
+    <article class="card">
+      <h2>Quotation for {{appointmentNo}}</h2>
+      <p class="muted">{{patientName}} &middot; {{treatmentName}}</p>
+      <p class="hint"><strong>Pricing rule applied:</strong> {{pricingRule}}</p>
+
+      <table class="data totals">
+        <tbody>
+          <tr><td>Consultation fee</td><td class="num">{{consultationFee}}</td></tr>
+          <tr><td>Treatment charge</td><td class="num">{{treatmentCharge}}</td></tr>
+          <tr><td>Discount</td><td class="num">&minus;{{discountAmount}}</td></tr>
+          <tr><td>Tax</td><td class="num">{{taxAmount}}</td></tr>
+          <tr class="total-row"><td><strong>Total (LKR)</strong></td>
+              <td class="num"><strong>{{total}}</strong></td></tr>
+        </tbody>
+      </table>
+
+      <p class="hint">A discount may not exceed {{maxDiscount}}% of the subtotal.</p>
+
+      <form method="post" action="/bills" class="form">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <input type="hidden" name="appointmentNo" value="{{appointmentNo}}">
+        <input type="hidden" name="quantity" value="{{quantity}}">
+        <input type="hidden" name="discountPercent" value="{{discountPercent}}">
+        <button class="button" type="submit">Issue this bill</button>
+      </form>
+    </article>
+  {{/if}}
+
+  <p class="muted small"><a href="/bills">Back to bills</a></p>
+</section>
+
+{{>footer}}

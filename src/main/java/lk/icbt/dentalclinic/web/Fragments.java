@@ -1,7 +1,12 @@
 package lk.icbt.dentalclinic.web;
 
+import lk.icbt.dentalclinic.dao.ReportDao;
+import lk.icbt.dentalclinic.event.AppointmentNotificationListener;
 import lk.icbt.dentalclinic.model.Appointment;
 import lk.icbt.dentalclinic.model.AppointmentStatus;
+import lk.icbt.dentalclinic.model.Bill;
+import lk.icbt.dentalclinic.model.BillLineItem;
+import lk.icbt.dentalclinic.model.BillStatus;
 import lk.icbt.dentalclinic.model.Dentist;
 import lk.icbt.dentalclinic.model.Patient;
 import lk.icbt.dentalclinic.model.Treatment;
@@ -264,6 +269,181 @@ public final class Fragments {
                     .append("</tr>\n");
         }
         return html.append("  </tbody>\n</table>\n</div>\n").toString();
+    }
+
+
+    // ------------------------------------------------------------------- bills
+
+    public static String billTable(List<Bill> bills, boolean showPatient) {
+        if (bills.isEmpty()) {
+            return "<p class=\"muted\">No bills to show.</p>";
+        }
+        StringBuilder html = new StringBuilder("<div class=\"table-wrap\">\n<table class=\"data\">\n"
+                + "  <thead><tr><th>Bill</th><th>Appointment</th>\n");
+        if (showPatient) {
+            html.append("    <th>Patient</th>\n");
+        }
+        html.append("    <th>Treatment</th><th class=\"num\">Total (LKR)</th>\n")
+                .append("    <th>Status</th><th></th></tr></thead>\n  <tbody>\n");
+
+        for (Bill bill : bills) {
+            Appointment appointment = bill.getAppointment();
+            html.append("    <tr>")
+                    .append(cell(bill.getBillNo(), "mono"))
+                    .append(cell(appointment == null ? "" : appointment.getAppointmentNo(), "mono"));
+            if (showPatient) {
+                html.append(cell(appointment == null || appointment.getPatient() == null
+                        ? "" : appointment.getPatient().getFullName(), null));
+            }
+            html.append(cell(appointment == null || appointment.getTreatment() == null
+                            ? "" : appointment.getTreatment().getName(), null))
+                    .append(cell(bill.getTotalAmount().toPlainString(), "num"))
+                    .append("<td>").append(billStatusBadge(bill.getStatus())).append("</td>")
+                    .append("<td><a href=\"/bills/").append(Html.escape(bill.getBillNo()))
+                    .append("\">View</a></td>")
+                    .append("</tr>\n");
+        }
+        return html.append("  </tbody>\n</table>\n</div>\n").toString();
+    }
+
+    public static String billStatusBadge(BillStatus status) {
+        String tone = switch (status) {
+            case ISSUED -> "neutral";
+            case PAID -> "good";
+            case VOID -> "bad";
+        };
+        return "<span class=\"badge " + tone + "\">" + Html.escape(status.name()) + "</span>";
+    }
+
+    /** The itemised rows on a bill and on the printed receipt. */
+    public static String lineItemRows(List<BillLineItem> items) {
+        if (items.isEmpty()) {
+            return "<tr><td colspan=\"3\" class=\"muted\">No items.</td></tr>";
+        }
+        StringBuilder html = new StringBuilder();
+        for (BillLineItem item : items) {
+            html.append("<tr>")
+                    .append(cell(item.description(), null))
+                    .append(cell(String.valueOf(item.quantity()), "num"))
+                    .append(cell(item.lineTotal().toPlainString(), "num"))
+                    .append("</tr>\n");
+        }
+        return html.toString();
+    }
+
+    // ----------------------------------------------------------------- reports
+
+    /** Rows from sp_daily_revenue_report; the ROLLUP row is styled as a footer. */
+    public static String revenueTable(List<ReportDao.TreatmentRevenue> rows) {
+        if (rows.isEmpty()) {
+            return "<p class=\"muted\">No bills were issued on this date.</p>";
+        }
+        StringBuilder html = new StringBuilder("<div class=\"table-wrap\">\n<table class=\"data\">\n"
+                + "  <thead><tr><th>Treatment</th><th class=\"num\">Bills</th>"
+                + "<th class=\"num\">Consultation</th><th class=\"num\">Treatment</th>"
+                + "<th class=\"num\">Discounts</th><th class=\"num\">Billed</th>"
+                + "<th class=\"num\">Collected</th></tr></thead>\n  <tbody>\n");
+
+        for (ReportDao.TreatmentRevenue row : rows) {
+            html.append(row.isTotal() ? "    <tr class=\"total-row\">" : "    <tr>")
+                    .append(cell(row.treatment(), null))
+                    .append(cell(String.valueOf(row.billsIssued()), "num"))
+                    .append(cell(row.consultationFees().toPlainString(), "num"))
+                    .append(cell(row.treatmentCharges().toPlainString(), "num"))
+                    .append(cell(row.discounts().toPlainString(), "num"))
+                    .append(cell(row.totalBilled().toPlainString(), "num"))
+                    .append(cell(row.totalCollected().toPlainString(), "num"))
+                    .append("</tr>\n");
+        }
+        return html.append("  </tbody>\n</table>\n</div>\n").toString();
+    }
+
+    /** Rows from vw_dentist_workload. */
+    public static String workloadTable(List<ReportDao.DentistWorkload> rows) {
+        if (rows.isEmpty()) {
+            return "<p class=\"muted\">No dentists on file.</p>";
+        }
+        StringBuilder html = new StringBuilder("<div class=\"table-wrap\">\n<table class=\"data\">\n"
+                + "  <thead><tr><th>Dentist</th><th>Specialisation</th>"
+                + "<th class=\"num\">Total</th><th class=\"num\">Completed</th>"
+                + "<th class=\"num\">Cancelled</th><th class=\"num\">Upcoming</th>"
+                + "<th class=\"num\">Completion</th></tr></thead>\n  <tbody>\n");
+
+        for (ReportDao.DentistWorkload row : rows) {
+            html.append("    <tr>")
+                    .append(cell(row.fullName(), null))
+                    .append(cell(row.specialization(), null))
+                    .append(cell(String.valueOf(row.totalAppointments()), "num"))
+                    .append(cell(String.valueOf(row.completed()), "num"))
+                    .append(cell(String.valueOf(row.cancelled()), "num"))
+                    .append(cell(String.valueOf(row.upcoming()), "num"))
+                    .append(cell(row.completionRatePct().toPlainString() + "%", "num"))
+                    .append("</tr>\n");
+        }
+        return html.append("  </tbody>\n</table>\n</div>\n").toString();
+    }
+
+    public static String visitHistoryTable(List<ReportDao.PatientVisit> visits) {
+        if (visits.isEmpty()) {
+            return "<p class=\"muted\">No visits recorded.</p>";
+        }
+        StringBuilder html = new StringBuilder("<div class=\"table-wrap\">\n<table class=\"data\">\n"
+                + "  <thead><tr><th>Appointment</th><th>Date</th><th>Dentist</th>"
+                + "<th>Treatment</th><th>Status</th><th>Bill</th>"
+                + "<th class=\"num\">Total (LKR)</th></tr></thead>\n  <tbody>\n");
+
+        for (ReportDao.PatientVisit visit : visits) {
+            html.append("    <tr>")
+                    .append("<td class=\"mono\"><a href=\"/appointments/")
+                    .append(Html.escape(visit.appointmentNo())).append("\">")
+                    .append(Html.escape(visit.appointmentNo())).append("</a></td>")
+                    .append(cell(DATE.format(visit.date()), null))
+                    .append(cell(visit.dentist(), null))
+                    .append(cell(visit.treatment(), null))
+                    .append("<td>")
+                    .append(statusBadge(AppointmentStatus.of(visit.status())))
+                    .append("</td>");
+            if (visit.hasBill()) {
+                html.append("<td class=\"mono\"><a href=\"/bills/")
+                        .append(Html.escape(visit.billNo())).append("\">")
+                        .append(Html.escape(visit.billNo())).append("</a></td>")
+                        .append(cell(visit.total().toPlainString(), "num"));
+            } else {
+                html.append("<td class=\"muted\">not billed</td>").append(cell("", "num"));
+            }
+            html.append("</tr>\n");
+        }
+        return html.append("  </tbody>\n</table>\n</div>\n").toString();
+    }
+
+    public static String patientOptions(List<Patient> patients, Integer selectedId) {
+        StringBuilder html = new StringBuilder("<option value=\"\">Choose a patient…</option>\n");
+        for (Patient p : patients) {
+            html.append("<option value=\"").append(p.getId()).append('"')
+                    .append(selected(selectedId, p.getId())).append('>')
+                    .append(Html.escape(p.getFullName()))
+                    .append(" (").append(Html.escape(p.getPatientNo())).append(')')
+                    .append("</option>\n");
+        }
+        return html.toString();
+    }
+
+    /**
+     * The confirmations the Observer listener produced — the visible evidence for A12
+     * that the asynchronous notification really ran after the booking committed.
+     */
+    public static String notificationList(
+            List<AppointmentNotificationListener.Notification> notifications) {
+        if (notifications.isEmpty()) {
+            return "<p class=\"muted\">No confirmations sent since the server started.</p>";
+        }
+        StringBuilder html = new StringBuilder("<ul class=\"notifications\">\n");
+        for (AppointmentNotificationListener.Notification n : notifications) {
+            html.append("  <li><span class=\"badge neutral\">")
+                    .append(Html.escape(n.channel())).append("</span> ")
+                    .append(Html.escape(n.body())).append("</li>\n");
+        }
+        return html.append("</ul>\n").toString();
     }
 
     // ------------------------------------------------------------------ helpers

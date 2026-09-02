@@ -12,6 +12,7 @@ import lk.icbt.dentalclinic.web.filter.SessionFilter;
 import lk.icbt.dentalclinic.web.handler.AppointmentDetailHandler;
 import lk.icbt.dentalclinic.web.handler.AppointmentHandler;
 import lk.icbt.dentalclinic.web.handler.AvailabilityHandler;
+import lk.icbt.dentalclinic.web.handler.BillingHandler;
 import lk.icbt.dentalclinic.web.handler.DashboardHandler;
 import lk.icbt.dentalclinic.web.handler.HealthHandler;
 import lk.icbt.dentalclinic.web.handler.HelpHandler;
@@ -19,6 +20,7 @@ import lk.icbt.dentalclinic.web.handler.LoginHandler;
 import lk.icbt.dentalclinic.web.handler.LogoutHandler;
 import lk.icbt.dentalclinic.web.handler.RecordsHandler;
 import lk.icbt.dentalclinic.web.handler.RegisterHandler;
+import lk.icbt.dentalclinic.web.handler.ReportsHandler;
 import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
 
 import java.io.IOException;
@@ -125,6 +127,11 @@ public final class Main {
         AvailabilityHandler availability = new AvailabilityHandler(
                 registry.appointmentService(), registry.dentistDao(), view);
 
+        BillingHandler bills = new BillingHandler(registry.billingService(),
+                registry.appointmentService(), view);
+        ReportsHandler reports = new ReportsHandler(registry.reportDao(), registry.patientDao(),
+                registry.notificationListener(), view);
+
         RecordsHandler patients = records(registry, RecordsHandler.Kind.PATIENTS, view);
         RecordsHandler dentists = records(registry, RecordsHandler.Kind.DENTISTS, view);
         RecordsHandler treatments = records(registry, RecordsHandler.Kind.TREATMENTS, view);
@@ -164,6 +171,17 @@ public final class Main {
                 .post("/appointments/{no}/{action}", detail.action())
 
                 .get("/availability", availability)
+
+                // Billing. As with appointments, the literal "new" must precede "{no}".
+                .get("/bills/new", bills.quoteForm())
+                .get("/bills", bills)
+                .post("/bills", bills)
+                .get("/bills/{no}", bills.detail())
+                .get("/bills/{no}/receipt", bills.receipt())
+                .post("/bills/{no}/pay", bills.pay())
+
+                .get("/admin/reports", reports)
+                .get("/patient/history", reports.myHistory())
 
                 // Administrator record management.
                 .get("/admin/patients", patients)

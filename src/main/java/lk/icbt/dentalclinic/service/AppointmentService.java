@@ -7,6 +7,8 @@ import lk.icbt.dentalclinic.dao.PatientDao;
 import lk.icbt.dentalclinic.dao.SettingsDao;
 import lk.icbt.dentalclinic.dao.TreatmentDao;
 import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
+import lk.icbt.dentalclinic.event.AppointmentBookedEvent;
+import lk.icbt.dentalclinic.event.EventBus;
 import lk.icbt.dentalclinic.model.Appointment;
 import lk.icbt.dentalclinic.model.AppointmentStatus;
 import lk.icbt.dentalclinic.model.Dentist;
@@ -52,11 +54,12 @@ public final class AppointmentService {
     private final SettingsDao settingsDao;
     private final AppointmentAccessPolicy accessPolicy;
     private final TransactionManager transactions;
+    private final EventBus eventBus;
 
     public AppointmentService(AppointmentDao appointmentDao, PatientDao patientDao,
                               DentistDao dentistDao, TreatmentDao treatmentDao,
                               SettingsDao settingsDao, AppointmentAccessPolicy accessPolicy,
-                              TransactionManager transactions) {
+                              TransactionManager transactions, EventBus eventBus) {
         this.appointmentDao = appointmentDao;
         this.patientDao = patientDao;
         this.dentistDao = dentistDao;
@@ -64,6 +67,7 @@ public final class AppointmentService {
         this.settingsDao = settingsDao;
         this.accessPolicy = accessPolicy;
         this.transactions = transactions;
+        this.eventBus = eventBus;
     }
 
     public ClinicSettings settings() {
@@ -96,8 +100,9 @@ public final class AppointmentService {
         requireSlotFree(request.dentistId(), request.appointmentDate(),
                 request.appointmentTime(), settings, null);
 
+        Appointment booked;
         try {
-            return transactions.inTransactionAs(actor.getUserId(), () -> {
+            booked = transactions.inTransactionAs(actor.getUserId(), () -> {
                 int patientId = resolvePatientId(request);
                 String appointmentNo =
                         appointmentDao.nextAppointmentNo(request.appointmentDate().getYear());
@@ -115,12 +120,21 @@ public final class AppointmentService {
 
                 int id = appointmentDao.insert(appointment, actor.getUserId());
                 LOG.info(() -> "Booked " + appointmentNo + " by " + actor.getUsername());
-                return appointment.toBuilder().appointmentId(id).build();
+                // Re-read so the event carries the patient, dentist and treatment a
+                // notification needs, without the listener touching the database.
+                return appointmentDao.findByNumberDetailed(appointmentNo)
+                        .orElseGet(() -> appointment.toBuilder().appointmentId(id).build());
             });
         } catch (DuplicateKeyException e) {
             throw translateSlotClash(e, request.dentistId(), request.appointmentDate(),
                     request.appointmentTime(), settings);
         }
+
+        // OBSERVER, published AFTER the commit. Realises the <<extend>> relationship
+        // "Send Confirmation extends Book Appointment [booking succeeded]". Inside the
+        // transaction a listener could act on a booking about to be rolled back.
+        eventBus.publish(AppointmentBookedEvent.of(booked, actor.getUsername()));
+        return booked;
     }
 
     /** Creates the patient record when the booking carries typed details rather than an id. */
