@@ -50,4 +50,35 @@ public final class JdbcDentistDao extends AbstractJdbcDao implements DentistDao 
     public List<Dentist> findActive() {
         return query(SELECT + " WHERE active = TRUE ORDER BY full_name", MAPPER);
     }
+
+    @Override
+    public int create(Dentist dentist) {
+        return insertReturningKey("""
+                        INSERT INTO dentists
+                            (user_id, full_name, specialization, phone, email,
+                             session_start, session_end, active)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        """,
+                dentist.getUserId(), dentist.getFullName(), dentist.getSpecialization(),
+                dentist.getContactNumber(), dentist.getEmail(),
+                dentist.getSessionStart(), dentist.getSessionEnd(), dentist.isActive());
+    }
+
+    @Override
+    public void update(Dentist dentist) {
+        update("""
+                        UPDATE dentists
+                        SET full_name = ?, specialization = ?, phone = ?, email = ?,
+                            session_start = ?, session_end = ?
+                        WHERE dentist_id = ?
+                        """,
+                dentist.getFullName(), dentist.getSpecialization(),
+                dentist.getContactNumber(), dentist.getEmail(),
+                dentist.getSessionStart(), dentist.getSessionEnd(), dentist.getId());
+    }
+
+    @Override
+    public void setActive(int dentistId, boolean active) {
+        update("UPDATE dentists SET active = ? WHERE dentist_id = ?", active, dentistId);
+    }
 }

@@ -1,5 +1,6 @@
 package lk.icbt.dentalclinic.config;
 
+import lk.icbt.dentalclinic.dao.AppointmentDao;
 import lk.icbt.dentalclinic.dao.DentistDao;
 import lk.icbt.dentalclinic.dao.HelpTopicDao;
 import lk.icbt.dentalclinic.dao.PatientDao;
@@ -8,6 +9,7 @@ import lk.icbt.dentalclinic.dao.SettingsDao;
 import lk.icbt.dentalclinic.dao.TreatmentDao;
 import lk.icbt.dentalclinic.dao.UserDao;
 import lk.icbt.dentalclinic.dao.jdbc.ConnectionPool;
+import lk.icbt.dentalclinic.dao.jdbc.JdbcAppointmentDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcDentistDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcHelpTopicDao;
 import lk.icbt.dentalclinic.dao.jdbc.JdbcPatientDao;
@@ -19,6 +21,8 @@ import lk.icbt.dentalclinic.dao.jdbc.TransactionManager;
 import lk.icbt.dentalclinic.security.AccessRules;
 import lk.icbt.dentalclinic.security.PasswordHasher;
 import lk.icbt.dentalclinic.security.SessionManager;
+import lk.icbt.dentalclinic.service.AppointmentAccessPolicy;
+import lk.icbt.dentalclinic.service.AppointmentService;
 import lk.icbt.dentalclinic.service.AuthService;
 import lk.icbt.dentalclinic.service.RegistrationService;
 import lk.icbt.dentalclinic.web.TemplateEngine;
@@ -59,6 +63,7 @@ public final class ServiceRegistry {
     private final TreatmentDao treatmentDao;
     private final HelpTopicDao helpTopicDao;
     private final SettingsDao settingsDao;
+    private final AppointmentDao appointmentDao;
 
     // Cross-cutting
     private final PasswordHasher passwordHasher;
@@ -68,6 +73,8 @@ public final class ServiceRegistry {
     // Business tier
     private final AuthService authService;
     private final RegistrationService registrationService;
+    private final AppointmentAccessPolicy appointmentAccessPolicy;
+    private final AppointmentService appointmentService;
 
     // Presentation tier
     private final TemplateEngine templateEngine;
@@ -85,6 +92,7 @@ public final class ServiceRegistry {
         this.treatmentDao = new JdbcTreatmentDao(connectionPool);
         this.helpTopicDao = new JdbcHelpTopicDao(connectionPool);
         this.settingsDao = new JdbcSettingsDao(connectionPool);
+        this.appointmentDao = new JdbcAppointmentDao(connectionPool);
 
         this.passwordHasher = new PasswordHasher();
         this.sessionManager = SessionManager.getInstance();
@@ -93,6 +101,10 @@ public final class ServiceRegistry {
         this.authService = new AuthService(userDao, passwordHasher, sessionManager);
         this.registrationService = new RegistrationService(
                 userDao, patientDao, roleDao, passwordHasher, transactionManager);
+        this.appointmentAccessPolicy = new AppointmentAccessPolicy(patientDao, dentistDao);
+        this.appointmentService = new AppointmentService(appointmentDao, patientDao,
+                dentistDao, treatmentDao, settingsDao, appointmentAccessPolicy,
+                transactionManager);
 
         this.templateEngine = new TemplateEngine(config.isDevelopment());
     }
@@ -155,6 +167,18 @@ public final class ServiceRegistry {
 
     public RegistrationService registrationService() {
         return registrationService;
+    }
+
+    public AppointmentDao appointmentDao() {
+        return appointmentDao;
+    }
+
+    public AppointmentAccessPolicy appointmentAccessPolicy() {
+        return appointmentAccessPolicy;
+    }
+
+    public AppointmentService appointmentService() {
+        return appointmentService;
     }
 
     public TemplateEngine templateEngine() {

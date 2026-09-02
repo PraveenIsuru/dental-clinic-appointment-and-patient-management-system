@@ -1,0 +1,52 @@
+{{>header}}
+
+<section>
+  <div class="page-head">
+    <div><h1>Treatments</h1><p class="muted">{{count}} in the catalogue</p></div>
+    <div class="actions">
+      <a class="button ghost" href="/admin/patients">Patients</a>
+      <a class="button ghost" href="/admin/dentists">Dentists</a>
+    </div>
+  </div>
+
+  {{#if alert}}<p class="alert success" role="status">{{alert}}</p>{{/if}}
+  {{#if hasErrors}}<p class="alert error" role="alert">Please correct the fields marked below.</p>{{/if}}
+
+  {{{rows}}}
+
+  <details class="card reveal" {{#if hasErrors}}open{{/if}}>
+    <summary><strong>Add a treatment</strong></summary>
+    <form method="post" action="/admin/treatments" class="form">
+      <input type="hidden" name="_csrf" value="{{csrf}}">
+
+      <label for="code">Code</label>
+      <input id="code" name="code" value="{{code}}" placeholder="CLEAN" required maxlength="20">
+      {{#if error_code}}<p class="field-error">{{error_code}}</p>{{/if}}
+
+      <label for="name">Name</label>
+      <input id="name" name="name" value="{{name}}" required maxlength="120">
+      {{#if error_name}}<p class="field-error">{{error_name}}</p>{{/if}}
+
+      <label for="family">Family</label>
+      <select id="family" name="family" required>{{{familyOptions}}}</select>
+      <p class="hint">The family decides which pricing strategy applies when the bill is built.</p>
+      {{#if error_family}}<p class="field-error">{{error_family}}</p>{{/if}}
+
+      <label for="baseCost">Base cost (LKR)</label>
+      <input id="baseCost" name="baseCost" value="{{baseCost}}" placeholder="5000.00" required>
+      {{#if error_baseCost}}<p class="field-error">{{error_baseCost}}</p>{{/if}}
+
+      <label for="durationMinutes">Duration (minutes)</label>
+      <input id="durationMinutes" name="durationMinutes" type="number" min="1" step="1"
+             value="{{durationMinutes}}" placeholder="30" required>
+      {{#if error_durationMinutes}}<p class="field-error">{{error_durationMinutes}}</p>{{/if}}
+
+      <label for="description">Description <span class="muted">(optional)</span></label>
+      <input id="description" name="description" value="{{description}}" maxlength="255">
+
+      <button class="button" type="submit">Add treatment</button>
+    </form>
+  </details>
+</section>
+
+{{>footer}}

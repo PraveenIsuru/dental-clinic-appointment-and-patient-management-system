@@ -1,14 +1,19 @@
 {{>header}}
 
 <section>
-  <h1>Dentist dashboard</h1>
-  <p class="muted">Signed in as {{fullName}}.</p>
+  <h1>Your schedule</h1>
+  <p class="muted">{{fullName}} &middot; {{today}}</p>
 
   {{#if hasProfile}}
     <div class="stats">
+      <div class="stat"><strong>{{todayCount}}</strong><span>Appointments today</span></div>
       <div class="stat"><strong>{{specialization}}</strong><span>Specialisation</span></div>
-      <div class="stat"><strong>{{sessionStart}}</strong><span>Session starts</span></div>
-      <div class="stat"><strong>{{sessionEnd}}</strong><span>Session ends</span></div>
+      <div class="stat"><strong>{{sessionStart}}–{{sessionEnd}}</strong><span>Your session</span></div>
+    </div>
+
+    <div class="actions row">
+      <a class="button ghost" href="/availability?dentistId={{dentistId}}">My availability</a>
+      <a class="button ghost" href="/appointments/search">Find by number</a>
     </div>
   {{/if}}
   {{#unless hasProfile}}
@@ -17,18 +22,11 @@
     </p>
   {{/unless}}
 
-  <div class="grid">
-    <article class="card">
-      <h2>My schedule</h2>
-      <p>The appointments booked with you, by day.</p>
-      <p class="tag">Available in milestone 3</p>
-    </article>
-    <article class="card">
-      <h2>Complete a treatment</h2>
-      <p>Mark an appointment complete so it can be billed.</p>
-      <p class="tag">Available in milestone 3</p>
-    </article>
-  </div>
+  <h2 class="section-head">Today's appointments</h2>
+  {{{todayRows}}}
+  <p class="muted small">
+    Open an appointment to mark the treatment complete, which makes it billable.
+  </p>
 </section>
 
 {{>footer}}

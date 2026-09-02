@@ -104,7 +104,10 @@ class TemplateEngineTest {
         // A cheap guard against a typo in a template name or an unclosed {{#if}},
         // which would otherwise only surface when a user opened that page.
         List<String> templates = List.of("login", "register", "help",
-                "dashboard-admin", "dashboard-dentist", "dashboard-patient");
+                "dashboard-admin", "dashboard-dentist", "dashboard-patient",
+                "appointments", "appointment-new", "appointment-detail",
+                "appointment-search", "availability",
+                "records-patients", "records-dentists", "records-treatments");
 
         for (String template : templates) {
             String rendered = engine.render(template, model("signedIn", true,

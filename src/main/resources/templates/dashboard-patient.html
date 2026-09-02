@@ -4,21 +4,24 @@
   <h1>Welcome, {{fullName}}</h1>
   <p class="muted">Patient number <strong>{{patientNo}}</strong></p>
 
+  <div class="actions row">
+    <a class="button" href="/appointments/new">Book an appointment</a>
+    <a class="button ghost" href="/appointments">My appointments</a>
+    <a class="button ghost" href="/availability">See free times</a>
+  </div>
+
+  <h2 class="section-head">Your next appointments</h2>
+  {{{upcomingRows}}}
+  <p class="muted small">
+    You can reschedule or cancel online up to 24 hours beforehand. After that,
+    please telephone the clinic.
+  </p>
+
   <div class="grid">
     <article class="card">
       <h2>Your details</h2>
       <p><strong>Contact</strong><br>{{contactNumber}}</p>
       <p><strong>Address</strong><br>{{address}}</p>
-    </article>
-    <article class="card">
-      <h2>Book an appointment</h2>
-      <p>Choose a treatment, a dentist and a free time slot.</p>
-      <p class="tag">Available in milestone 3</p>
-    </article>
-    <article class="card">
-      <h2>Your appointments</h2>
-      <p>See, reschedule or cancel your upcoming visits.</p>
-      <p class="tag">Available in milestone 3</p>
     </article>
     <article class="card">
       <h2>Your bills</h2>

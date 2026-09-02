@@ -9,11 +9,15 @@ import lk.icbt.dentalclinic.web.filter.AuthorizationFilter;
 import lk.icbt.dentalclinic.web.filter.CsrfFilter;
 import lk.icbt.dentalclinic.web.filter.LoggingFilter;
 import lk.icbt.dentalclinic.web.filter.SessionFilter;
+import lk.icbt.dentalclinic.web.handler.AppointmentDetailHandler;
+import lk.icbt.dentalclinic.web.handler.AppointmentHandler;
+import lk.icbt.dentalclinic.web.handler.AvailabilityHandler;
 import lk.icbt.dentalclinic.web.handler.DashboardHandler;
 import lk.icbt.dentalclinic.web.handler.HealthHandler;
 import lk.icbt.dentalclinic.web.handler.HelpHandler;
 import lk.icbt.dentalclinic.web.handler.LoginHandler;
 import lk.icbt.dentalclinic.web.handler.LogoutHandler;
+import lk.icbt.dentalclinic.web.handler.RecordsHandler;
 import lk.icbt.dentalclinic.web.handler.RegisterHandler;
 import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
 
@@ -111,7 +115,19 @@ public final class Main {
         RegisterHandler register = new RegisterHandler(registry.registrationService(), view);
         HelpHandler help = new HelpHandler(registry.helpTopicDao(), view);
         DashboardHandler dashboard = new DashboardHandler(
+                registry.patientDao(), registry.dentistDao(), registry.treatmentDao(),
+                registry.appointmentService(), view);
+
+        AppointmentHandler appointments = new AppointmentHandler(registry.appointmentService(),
                 registry.patientDao(), registry.dentistDao(), registry.treatmentDao(), view);
+        AppointmentDetailHandler detail =
+                new AppointmentDetailHandler(registry.appointmentService(), view);
+        AvailabilityHandler availability = new AvailabilityHandler(
+                registry.appointmentService(), registry.dentistDao(), view);
+
+        RecordsHandler patients = records(registry, RecordsHandler.Kind.PATIENTS, view);
+        RecordsHandler dentists = records(registry, RecordsHandler.Kind.DENTISTS, view);
+        RecordsHandler treatments = records(registry, RecordsHandler.Kind.TREATMENTS, view);
 
         return new Router()
                 // Order matters: logging wraps everything so it times the whole request;
@@ -136,7 +152,34 @@ public final class Main {
                 .get("/dentist/dashboard", dashboard)
                 .get("/patient/dashboard", dashboard)
 
+                // Appointments. Order matters within this block: the literal segments
+                // "new" and "search" must be registered before "{no}", or the wildcard
+                // route would swallow them and try to look up an appointment called
+                // "new". Routes match in registration order.
+                .get("/appointments/new", appointments.newForm())
+                .get("/appointments/search", detail.search())
+                .get("/appointments", appointments)
+                .post("/appointments", appointments)
+                .get("/appointments/{no}", detail)
+                .post("/appointments/{no}/{action}", detail.action())
+
+                .get("/availability", availability)
+
+                // Administrator record management.
+                .get("/admin/patients", patients)
+                .post("/admin/patients", patients)
+                .get("/admin/dentists", dentists)
+                .post("/admin/dentists", dentists)
+                .get("/admin/treatments", treatments)
+                .post("/admin/treatments", treatments)
+
                 // Registered last: the wildcard would otherwise shadow every route above it.
                 .get("/**", new StaticFileHandler());
+    }
+
+    private static RecordsHandler records(ServiceRegistry registry, RecordsHandler.Kind kind,
+                                          View view) {
+        return new RecordsHandler(kind, registry.patientDao(), registry.dentistDao(),
+                registry.treatmentDao(), registry.transactionManager(), view);
     }
 }

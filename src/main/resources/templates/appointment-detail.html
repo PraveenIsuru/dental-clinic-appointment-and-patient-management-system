@@ -1,0 +1,92 @@
+{{>header}}
+
+<section class="narrow-wide">
+  <div class="page-head">
+    <div>
+      <h1>{{appointmentNo}}</h1>
+      <p class="muted">{{{statusBadge}}} &middot; {{dateLong}} at {{timeValue}}</p>
+    </div>
+    <div class="actions"><a class="button ghost" href="/appointments">All appointments</a></div>
+  </div>
+
+  {{#if justBooked}}
+    <p class="alert success" role="status">
+      Appointment registered. The number is <strong>{{appointmentNo}}</strong> &mdash;
+      write it on the patient card.
+    </p>
+  {{/if}}
+  {{#if alert}}<p class="alert success" role="status">{{alert}}</p>{{/if}}
+  {{#if error}}<p class="alert error" role="alert">{{{error}}}</p>{{/if}}
+
+  <div class="grid">
+    <article class="card">
+      <h2>Patient</h2>
+      <p><strong>{{patientName}}</strong><br><span class="mono">{{patientNo}}</span></p>
+      <p><strong>Contact</strong><br>{{contactNumber}}</p>
+      <p><strong>Address</strong><br>{{address}}</p>
+    </article>
+
+    <article class="card">
+      <h2>Treatment</h2>
+      <p><strong>{{treatmentName}}</strong></p>
+      <p>LKR {{treatmentCost}} &middot; {{durationMinutes}} minutes</p>
+      <p><strong>Dentist</strong><br>{{dentistName}}<br>
+         <span class="muted small">{{specialization}}</span></p>
+    </article>
+  </div>
+
+  {{#if notes}}
+    <article class="card"><h2>Notes</h2><p>{{notes}}</p></article>
+  {{/if}}
+
+  {{#if canReschedule}}
+    <article class="card">
+      <h2>Move this appointment</h2>
+      <form method="post" action="/appointments/{{appointmentNo}}/reschedule" class="inline-form">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <label for="appointmentDate">Date</label>
+        <input id="appointmentDate" name="appointmentDate" type="date"
+               value="{{dateIso}}" min="{{minDate}}" required>
+        <label for="appointmentTime">Time</label>
+        <input id="appointmentTime" name="appointmentTime" type="time"
+               value="{{timeValue}}" step="1800" required>
+        <button class="button ghost" type="submit">Reschedule</button>
+      </form>
+    </article>
+  {{/if}}
+
+  <div class="actions row">
+    {{#if canConfirm}}
+      <form method="post" action="/appointments/{{appointmentNo}}/confirm">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <button class="button ghost" type="submit">Confirm</button>
+      </form>
+    {{/if}}
+    {{#if canComplete}}
+      <form method="post" action="/appointments/{{appointmentNo}}/complete">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <button class="button" type="submit">Mark treatment complete</button>
+      </form>
+    {{/if}}
+    {{#if canCancel}}
+      <form method="post" action="/appointments/{{appointmentNo}}/cancel" data-confirm="cancel">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <button class="button danger" type="submit">Cancel appointment</button>
+      </form>
+    {{/if}}
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement: the form still submits with JavaScript disabled,
+  // it simply asks nothing first.
+  document.querySelectorAll('form[data-confirm="cancel"]').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!window.confirm('Cancel this appointment? The slot will be freed for someone else.')) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+
+{{>footer}}

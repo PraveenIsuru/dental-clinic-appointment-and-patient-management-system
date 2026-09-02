@@ -49,4 +49,40 @@ public final class JdbcTreatmentDao extends AbstractJdbcDao implements Treatment
     public List<Treatment> findActive() {
         return query(SELECT + " WHERE active = TRUE ORDER BY name", MAPPER);
     }
+
+    @Override
+    public boolean existsByCode(String code) {
+        return queryOne("SELECT 1 AS present FROM treatments WHERE code = ?",
+                rs -> rs.getInt("present"), code).isPresent();
+    }
+
+    @Override
+    public int create(Treatment treatment) {
+        return insertReturningKey("""
+                        INSERT INTO treatments
+                            (code, name, family, description, base_cost, duration_minutes, active)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        """,
+                treatment.getCode(), treatment.getName(), treatment.getFamily(),
+                treatment.getDescription(), treatment.getBaseCost(),
+                treatment.getDurationMinutes(), treatment.isActive());
+    }
+
+    @Override
+    public void update(Treatment treatment) {
+        update("""
+                        UPDATE treatments
+                        SET name = ?, family = ?, description = ?, base_cost = ?,
+                            duration_minutes = ?
+                        WHERE treatment_id = ?
+                        """,
+                treatment.getName(), treatment.getFamily(), treatment.getDescription(),
+                treatment.getBaseCost(), treatment.getDurationMinutes(),
+                treatment.getTreatmentId());
+    }
+
+    @Override
+    public void setActive(int treatmentId, boolean active) {
+        update("UPDATE treatments SET active = ? WHERE treatment_id = ?", active, treatmentId);
+    }
 }

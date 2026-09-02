@@ -2,29 +2,32 @@
 
 <section>
   <h1>Administrator dashboard</h1>
-  <p class="muted">Signed in as {{fullName}}.</p>
+  <p class="muted">Signed in as {{fullName}} &middot; {{today}}</p>
 
   <div class="stats">
+    <div class="stat"><strong>{{todayCount}}</strong><span>Appointments today</span></div>
     <div class="stat"><strong>{{patientCount}}</strong><span>Registered patients</span></div>
     <div class="stat"><strong>{{dentistCount}}</strong><span>Active dentists</span></div>
     <div class="stat"><strong>{{treatmentCount}}</strong><span>Treatments offered</span></div>
   </div>
 
+  <div class="actions row">
+    <a class="button" href="/appointments/new">New appointment</a>
+    <a class="button ghost" href="/appointments/search">Find by number</a>
+    <a class="button ghost" href="/availability">Availability</a>
+    <a class="button ghost" href="/admin/patients">Patients</a>
+    <a class="button ghost" href="/admin/dentists">Dentists</a>
+    <a class="button ghost" href="/admin/treatments">Treatments</a>
+  </div>
+
+  <h2 class="section-head">Today</h2>
+  {{{todayRows}}}
+
   <div class="grid">
-    <article class="card">
-      <h2>Appointments</h2>
-      <p>Register a new appointment, search by appointment number, reschedule or cancel.</p>
-      <p class="tag">Available in milestone 3</p>
-    </article>
     <article class="card">
       <h2>Billing</h2>
       <p>Generate a bill for a completed treatment and print the patient receipt.</p>
       <p class="tag">Available in milestone 4</p>
-    </article>
-    <article class="card">
-      <h2>Records</h2>
-      <p>Manage patients, dentists and the treatment catalogue.</p>
-      <p class="tag">Available in milestone 3</p>
     </article>
     <article class="card">
       <h2>Reports</h2>

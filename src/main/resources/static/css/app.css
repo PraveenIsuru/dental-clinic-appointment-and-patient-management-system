@@ -254,3 +254,169 @@ h1 { font-size: 1.6rem; margin: 0 0 0.35rem; }
 
 .help-topic h2 { font-size: 1rem; }
 .help-topic p  { font-size: 0.9rem; }
+
+/* ---------- page headers and action rows ---------- */
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.section-head {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.05rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.actions.row { margin: 1.25rem 0; align-items: center; }
+.actions form { margin: 0; }
+
+.narrow-wide { max-width: 46rem; margin: 0 auto; }
+
+.button.danger { background: var(--bad); }
+.button.danger:hover { background: #8a2822; }
+
+/* ---------- inline filter forms ---------- */
+
+.inline-form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.inline-form label { font-size: 0.85rem; font-weight: 600; }
+.inline-form input,
+.inline-form select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+/* ---------- selects inside the stacked form ---------- */
+
+.form select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+}
+.form select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.form-section {
+  margin: 1.5rem 0 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+/* ---------- data tables ---------- */
+
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+table.data th,
+table.data td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+table.data th {
+  background: var(--bg);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+table.data tr:last-child td { border-bottom: 0; }
+table.data tbody tr:hover { background: #fafcfb; }
+table.data .num { text-align: right; }
+.mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.85em; }
+
+/* ---------- status badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.badge.good    { border-color: var(--ok);  color: var(--ok); }
+.badge.bad     { border-color: var(--bad); color: var(--bad); }
+.badge.done    { border-color: #2b5c8a;    color: #2b5c8a; }
+.badge.neutral { color: var(--ink-soft); }
+
+/* ---------- availability grid ---------- */
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.slot {
+  display: block;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+}
+.slot span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.slot.free        { border-color: var(--ok); }
+.slot.free:hover  { background: var(--ok); color: var(--accent-ink); }
+.slot.free:hover span { color: var(--accent-ink); }
+.slot.free span   { color: var(--ok); }
+.slot.booked      { background: #fdf7f6; border-color: #e6cdc9; }
+.slot.off,
+.slot.past        { background: var(--bg); color: var(--ink-soft); opacity: 0.65; }
+
+/* ---------- collapsible create forms ---------- */
+
+details.reveal { margin-top: 1.5rem; }
+details.reveal summary { cursor: pointer; padding: 0.25rem 0; }
+details.reveal[open] summary { margin-bottom: 0.5rem; }

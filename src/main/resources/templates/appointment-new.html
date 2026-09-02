@@ -1,0 +1,74 @@
+{{>header}}
+
+<section class="narrow-wide">
+  <h1>Register an appointment</h1>
+  <p class="muted">
+    {{#if bookingForSelf}}Booking for yourself — {{patientName}} ({{patientNo}}).{{/if}}
+    {{#unless bookingForSelf}}Enter the patient's details, then choose a dentist and a time.{{/unless}}
+  </p>
+
+  {{#if alert}}<p class="alert error" role="alert">{{{alert}}}</p>{{/if}}
+  {{#if hasErrors}}<p class="alert error" role="alert">Please correct the fields marked below.</p>{{/if}}
+
+  <form method="post" action="/appointments" class="card form">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
+
+    {{#unless bookingForSelf}}
+      <h2 class="form-section">Patient</h2>
+
+      <label for="patientName">Patient name</label>
+      <input id="patientName" name="patientName" value="{{patientName}}" required maxlength="120">
+      {{#if error_patientName}}<p class="field-error">{{error_patientName}}</p>{{/if}}
+
+      <label for="address">Address</label>
+      <input id="address" name="address" value="{{address}}" required maxlength="255">
+      {{#if error_address}}<p class="field-error">{{error_address}}</p>{{/if}}
+
+      <label for="contactNumber">Contact number</label>
+      <input id="contactNumber" name="contactNumber" value="{{contactNumber}}"
+             placeholder="0771234567" required maxlength="20">
+      {{#if error_contactNumber}}<p class="field-error">{{error_contactNumber}}</p>{{/if}}
+
+      <label for="email">Email <span class="muted">(optional)</span></label>
+      <input id="email" name="email" type="email" value="{{email}}" maxlength="160">
+      {{#if error_email}}<p class="field-error">{{error_email}}</p>{{/if}}
+    {{/unless}}
+
+    <h2 class="form-section">Appointment</h2>
+
+    <label for="dentistId">Dentist</label>
+    <select id="dentistId" name="dentistId" required>{{{dentistOptions}}}</select>
+    {{#if error_dentistId}}<p class="field-error">{{error_dentistId}}</p>{{/if}}
+
+    <label for="treatmentId">Treatment</label>
+    <select id="treatmentId" name="treatmentId" required>{{{treatmentOptions}}}</select>
+    {{#if error_treatmentId}}<p class="field-error">{{error_treatmentId}}</p>{{/if}}
+
+    <label for="appointmentDate">Date</label>
+    <input id="appointmentDate" name="appointmentDate" type="date" value="{{dateIso}}"
+           min="{{minDate}}" max="{{maxDate}}" required>
+    {{#if error_appointmentDate}}<p class="field-error">{{error_appointmentDate}}</p>{{/if}}
+
+    <label for="appointmentTime">Time</label>
+    {{#if hasSlotList}}
+      <select id="appointmentTime" name="appointmentTime" required>{{{freeSlots}}}</select>
+    {{/if}}
+    {{#unless hasSlotList}}
+      <input id="appointmentTime" name="appointmentTime" type="time" value="{{timeValue}}"
+             step="1800" required>
+      <p class="hint">Choose a dentist and date, then <a href="/availability">check availability</a>
+        to pick from free slots.</p>
+    {{/unless}}
+    {{#if error_appointmentTime}}<p class="field-error">{{error_appointmentTime}}</p>{{/if}}
+
+    <label for="notes">Notes <span class="muted">(optional)</span></label>
+    <input id="notes" name="notes" value="{{notes}}" maxlength="500">
+    {{#if error_notes}}<p class="field-error">{{error_notes}}</p>{{/if}}
+
+    <button class="button" type="submit">Save appointment</button>
+  </form>
+
+  <p class="muted small"><a href="/appointments">Back to appointments</a></p>
+</section>
+
+{{>footer}}

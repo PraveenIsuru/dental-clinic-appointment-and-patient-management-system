@@ -1,0 +1,50 @@
+{{>header}}
+
+<section>
+  <div class="page-head">
+    <div><h1>Patients</h1><p class="muted">{{count}} on file</p></div>
+    <div class="actions">
+      <a class="button ghost" href="/admin/dentists">Dentists</a>
+      <a class="button ghost" href="/admin/treatments">Treatments</a>
+    </div>
+  </div>
+
+  {{#if alert}}<p class="alert success" role="status">{{alert}}</p>{{/if}}
+  {{#if hasErrors}}<p class="alert error" role="alert">Please correct the fields marked below.</p>{{/if}}
+
+  <form class="inline-form" method="get" action="/admin/patients">
+    <label for="q">Search</label>
+    <input id="q" name="q" value="{{query}}" placeholder="Name, number or contact">
+    <button class="button ghost" type="submit">Find</button>
+  </form>
+
+  {{{rows}}}
+
+  <details class="card reveal" {{#if hasErrors}}open{{/if}}>
+    <summary><strong>Register a new patient</strong></summary>
+    <form method="post" action="/admin/patients" class="form">
+      <input type="hidden" name="_csrf" value="{{csrf}}">
+
+      <label for="fullName">Full name</label>
+      <input id="fullName" name="fullName" value="{{fullName}}" required maxlength="120">
+      {{#if error_fullName}}<p class="field-error">{{error_fullName}}</p>{{/if}}
+
+      <label for="address">Address</label>
+      <input id="address" name="address" value="{{address}}" required maxlength="255">
+      {{#if error_address}}<p class="field-error">{{error_address}}</p>{{/if}}
+
+      <label for="contactNumber">Contact number</label>
+      <input id="contactNumber" name="contactNumber" value="{{contactNumber}}"
+             placeholder="0771234567" required maxlength="20">
+      {{#if error_contactNumber}}<p class="field-error">{{error_contactNumber}}</p>{{/if}}
+
+      <label for="email">Email <span class="muted">(optional)</span></label>
+      <input id="email" name="email" type="email" value="{{email}}" maxlength="160">
+      {{#if error_email}}<p class="field-error">{{error_email}}</p>{{/if}}
+
+      <button class="button" type="submit">Add patient</button>
+    </form>
+  </details>
+</section>
+
+{{>footer}}

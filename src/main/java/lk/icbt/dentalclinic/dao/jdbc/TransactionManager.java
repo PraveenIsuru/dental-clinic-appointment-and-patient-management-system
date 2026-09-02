@@ -66,6 +66,14 @@ public final class TransactionManager {
         });
     }
 
+    /** As {@link #inTransactionAs(Integer, TxCallable)}, for work that returns nothing. */
+    public void inTransactionAs(Integer actingUserId, TxRunnable work) {
+        inTransactionAs(actingUserId, () -> {
+            work.run();
+            return null;
+        });
+    }
+
     /**
      * Runs the work in a transaction, telling the database who is responsible.
      *
