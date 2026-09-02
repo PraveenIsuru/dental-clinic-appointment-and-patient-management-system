@@ -39,9 +39,9 @@ public final class Router implements HttpHandler {
     private static final String PATH_PARAMS = "lk.icbt.dentalclinic.pathParams";
 
     private final List<Route> routes = new ArrayList<>();
-    private Handler notFoundHandler = ex -> Responses.text(ex, 404, "404 Not Found");
-    private Handler errorHandler =
-            ex -> Responses.text(ex, 500, "500 Internal Server Error");
+    private final List<Filter> filters = new ArrayList<>();
+    private Handler notFoundHandler = ex -> Responses.html(ex, 404, Pages.notFound());
+    private Handler errorHandler = ex -> Responses.html(ex, 500, Pages.serverError());
 
     public Router get(String pattern, Handler handler) {
         return register("GET", pattern, handler);
@@ -74,12 +74,42 @@ public final class Router implements HttpHandler {
         return this;
     }
 
+    /**
+     * Registers the filter chain wrapped around every request, including the ones that
+     * end in 404 or 405 — so an unmatched path is still logged, and an unauthenticated
+     * request to a mistyped protected URL is still redirected rather than leaking the
+     * fact that no such page exists.
+     */
+    public Router filters(Filter... chain) {
+        this.filters.addAll(List.of(chain));
+        return this;
+    }
+
     public int routeCount() {
         return routes.size();
     }
 
+    public int filterCount() {
+        return filters.size();
+    }
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        try {
+            Filter.chain(filters, this::dispatch).handle(exchange);
+        } catch (RuntimeException | IOException e) {
+            LOG.log(Level.SEVERE, "Filter chain failed for " + exchange.getRequestURI(), e);
+            safely(exchange, errorHandler);
+        } finally {
+            // Must run for every request, including failures. Worker threads are pooled
+            // and reused, so leaving the session in the thread-local would hand it to
+            // whichever request the thread picks up next.
+            WebContext.clear();
+            exchange.close();
+        }
+    }
+
+    private void dispatch(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod().toUpperCase();
         // HEAD is served by the GET handler; Responses suppresses the body.
         String lookupMethod = "HEAD".equals(method) ? "GET" : method;
@@ -94,7 +124,9 @@ public final class Router implements HttpHandler {
                     continue;
                 }
                 if (route.method.equals(lookupMethod)) {
-                    exchange.setAttribute(PATH_PARAMS, params);
+                    // WebContext, not exchange.setAttribute: that map is context-wide
+                    // and would carry one request's path variables into the next.
+                    WebContext.put(PATH_PARAMS, params);
                     route.handler.handle(exchange);
                     return;
                 }
@@ -112,19 +144,22 @@ public final class Router implements HttpHandler {
         } catch (RuntimeException | IOException e) {
             LOG.log(Level.SEVERE,
                     "Unhandled failure for " + method + " " + exchange.getRequestURI(), e);
-            try {
-                errorHandler.handle(exchange);
-            } catch (RuntimeException | IOException ignored) {
-                // The response was probably already committed; nothing useful left to do.
-            }
-        } finally {
-            exchange.close();
+            safely(exchange, errorHandler);
+        }
+    }
+
+    /** Last-resort invocation: the response may already be committed, so failure here is ignorable. */
+    private static void safely(HttpExchange exchange, Handler handler) {
+        try {
+            handler.handle(exchange);
+        } catch (RuntimeException | IOException ignored) {
+            // Nothing useful left to do; the original failure is already logged.
         }
     }
 
     /** Returns a captured path variable, or {@code null} if the route did not declare it. */
     public static String pathParam(HttpExchange exchange, String name) {
-        Object raw = exchange.getAttribute(PATH_PARAMS);
+        Object raw = WebContext.get(PATH_PARAMS);
         if (raw instanceof Map<?, ?> map) {
             Object value = map.get(name);
             return value == null ? null : value.toString();

@@ -1,0 +1,37 @@
+{{>header}}
+
+<section>
+  <h1>Administrator dashboard</h1>
+  <p class="muted">Signed in as {{fullName}}.</p>
+
+  <div class="stats">
+    <div class="stat"><strong>{{patientCount}}</strong><span>Registered patients</span></div>
+    <div class="stat"><strong>{{dentistCount}}</strong><span>Active dentists</span></div>
+    <div class="stat"><strong>{{treatmentCount}}</strong><span>Treatments offered</span></div>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <h2>Appointments</h2>
+      <p>Register a new appointment, search by appointment number, reschedule or cancel.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+    <article class="card">
+      <h2>Billing</h2>
+      <p>Generate a bill for a completed treatment and print the patient receipt.</p>
+      <p class="tag">Available in milestone 4</p>
+    </article>
+    <article class="card">
+      <h2>Records</h2>
+      <p>Manage patients, dentists and the treatment catalogue.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+    <article class="card">
+      <h2>Reports</h2>
+      <p>Daily operations, revenue by treatment, dentist workload and visit history.</p>
+      <p class="tag">Available in milestone 4</p>
+    </article>
+  </div>
+</section>
+
+{{>footer}}

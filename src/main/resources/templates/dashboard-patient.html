@@ -1,0 +1,31 @@
+{{>header}}
+
+<section>
+  <h1>Welcome, {{fullName}}</h1>
+  <p class="muted">Patient number <strong>{{patientNo}}</strong></p>
+
+  <div class="grid">
+    <article class="card">
+      <h2>Your details</h2>
+      <p><strong>Contact</strong><br>{{contactNumber}}</p>
+      <p><strong>Address</strong><br>{{address}}</p>
+    </article>
+    <article class="card">
+      <h2>Book an appointment</h2>
+      <p>Choose a treatment, a dentist and a free time slot.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+    <article class="card">
+      <h2>Your appointments</h2>
+      <p>See, reschedule or cancel your upcoming visits.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+    <article class="card">
+      <h2>Your bills</h2>
+      <p>Past treatments and the receipts issued for them.</p>
+      <p class="tag">Available in milestone 4</p>
+    </article>
+  </div>
+</section>
+
+{{>footer}}

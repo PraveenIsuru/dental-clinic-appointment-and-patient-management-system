@@ -1,0 +1,34 @@
+{{>header}}
+
+<section>
+  <h1>Dentist dashboard</h1>
+  <p class="muted">Signed in as {{fullName}}.</p>
+
+  {{#if hasProfile}}
+    <div class="stats">
+      <div class="stat"><strong>{{specialization}}</strong><span>Specialisation</span></div>
+      <div class="stat"><strong>{{sessionStart}}</strong><span>Session starts</span></div>
+      <div class="stat"><strong>{{sessionEnd}}</strong><span>Session ends</span></div>
+    </div>
+  {{/if}}
+  {{#unless hasProfile}}
+    <p class="alert error">
+      No dentist profile is linked to this login. Ask an administrator to connect them.
+    </p>
+  {{/unless}}
+
+  <div class="grid">
+    <article class="card">
+      <h2>My schedule</h2>
+      <p>The appointments booked with you, by day.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+    <article class="card">
+      <h2>Complete a treatment</h2>
+      <p>Mark an appointment complete so it can be billed.</p>
+      <p class="tag">Available in milestone 3</p>
+    </article>
+  </div>
+</section>
+
+{{>footer}}

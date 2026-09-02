@@ -52,6 +52,8 @@ public final class AppConfig {
         overrideFromEnv(p, "DB_USER", "db.user");
         overrideFromEnv(p, "DB_PASSWORD", "db.password");
         overrideFromEnv(p, "SERVER_PORT", "server.port");
+        overrideFromEnv(p, "APP_ENVIRONMENT", "app.environment");
+        overrideFromEnv(p, "COOKIE_SECURE", "cookie.secure");
 
         return new AppConfig(p);
     }
@@ -65,6 +67,8 @@ public final class AppConfig {
         p.setProperty("db.user", "root");
         p.setProperty("db.password", "");
         p.setProperty("db.pool.size", "10");
+        p.setProperty("app.environment", "development");
+        p.setProperty("cookie.secure", "false");
         return p;
     }
 
@@ -93,11 +97,31 @@ public final class AppConfig {
         }
     }
 
+    public boolean getBoolean(String key) {
+        return Boolean.parseBoolean(get(key).trim());
+    }
+
     public int serverPort() {
         return getInt("server.port");
     }
 
     public int serverThreads() {
         return getInt("server.threads");
+    }
+
+    /** In development, templates are re-read on every request so an edit shows up at once. */
+    public boolean isDevelopment() {
+        return "development".equalsIgnoreCase(get("app.environment"));
+    }
+
+    /**
+     * Whether to mark cookies {@code Secure}.
+     *
+     * <p>Off by default because the development server speaks plain HTTP and a
+     * {@code Secure} cookie would simply never be sent, making sign-in appear broken.
+     * The M6 deployment sets {@code COOKIE_SECURE=true} over TLS.
+     */
+    public boolean cookiesSecure() {
+        return getBoolean("cookie.secure");
     }
 }

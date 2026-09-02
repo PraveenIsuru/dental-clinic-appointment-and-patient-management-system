@@ -1,0 +1,15 @@
+{{>header}}
+
+<section>
+  <h1>Help</h1>
+  <p class="muted">
+    Step-by-step instructions for using the system.
+    {{#unless signedIn}}Sign in to see the topics for your role.{{/unless}}
+  </p>
+
+  <div class="stack">
+    {{{topics}}}
+  </div>
+</section>
+
+{{>footer}}

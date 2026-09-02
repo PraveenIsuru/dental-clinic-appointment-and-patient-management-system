@@ -24,6 +24,18 @@ public final class Responses {
         send(exchange, status, "application/json; charset=utf-8", body.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Sends a 303 See Other.
+     *
+     * <p>303 rather than 302 after a successful form post: it tells the browser to
+     * follow up with a GET, so refreshing the destination does not re-submit the form
+     * and book a second appointment.
+     */
+    public static void redirect(HttpExchange exchange, String location) throws IOException {
+        exchange.getResponseHeaders().set("Location", location);
+        send(exchange, 303, "text/plain; charset=utf-8", new byte[0]);
+    }
+
     public static void send(HttpExchange exchange, int status, String contentType, byte[] body)
             throws IOException {
         exchange.getResponseHeaders().set("Content-Type", contentType);

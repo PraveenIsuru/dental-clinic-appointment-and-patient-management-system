@@ -1,6 +1,8 @@
 package lk.icbt.dentalclinic.web;
 
 import lk.icbt.dentalclinic.Main;
+import lk.icbt.dentalclinic.web.handler.HealthHandler;
+import lk.icbt.dentalclinic.web.handler.StaticFileHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +39,15 @@ class HttpEndpointTest {
 
     @BeforeAll
     static void startServer() throws IOException {
-        server = HttpServerBootstrap.start(0, 4, Main.buildRouter(Instant.now()));
+        // A router built here rather than Main.buildRouter, so these transport-level
+        // checks stay a unit test: the full application needs a database, and whether
+        // static assets are served correctly has nothing to do with MySQL. The
+        // database-backed routes are covered by LoginFlowIT.
+        Router router = new Router()
+                .get("/health", new HealthHandler(Instant.now(), Main.VERSION))
+                .get("/**", new StaticFileHandler());
+
+        server = HttpServerBootstrap.start(0, 4, router);
         client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
     }
 

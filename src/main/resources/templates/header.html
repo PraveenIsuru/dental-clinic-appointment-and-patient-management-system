@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{pageTitle}} &middot; Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">SD</span>
+    <span>
+      <strong>Sunrise Dental Clinic</strong>
+      <small>Appointment &amp; Patient Management</small>
+    </span>
+  </div>
+  <nav>
+    {{#if signedIn}}
+      <a href="{{dashboardPath}}">Dashboard</a>
+      <a href="/help">Help</a>
+      <span class="who">{{fullName}} &middot; <span class="pill">{{roleLabel}}</span></span>
+      <a class="button ghost" href="/logout">Sign out</a>
+    {{/if}}
+    {{#unless signedIn}}
+      <a href="/help">Help</a>
+      <a href="/register">Register</a>
+      <a class="button" href="/login">Sign in</a>
+    {{/unless}}
+  </nav>
+</header>
+
+<main>

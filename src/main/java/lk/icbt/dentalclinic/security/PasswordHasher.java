@@ -37,14 +37,33 @@ public final class PasswordHasher {
 
     private final SecureRandom random = new SecureRandom();
 
-    /** Hashes a password with a fresh random salt. */
+    /** Hashes a password with a fresh random salt at the current cost. */
     public String hash(char[] password) {
+        return hash(password, ITERATIONS);
+    }
+
+    /**
+     * Hashes at an explicit cost.
+     *
+     * <p>Exposed so the cost can be raised over time as hardware improves, and so the
+     * upgrade path in {@link #needsRehash(String)} is testable — verifying that a
+     * weaker stored hash is re-hashed on the next sign-in requires being able to
+     * produce one.
+     *
+     * @throws IllegalArgumentException if the cost is below 1,000, which would make the
+     *                                  hash cheap enough to be worse than useless
+     */
+    public String hash(char[] password, int iterations) {
+        if (iterations < 1_000) {
+            throw new IllegalArgumentException(
+                    "Refusing to hash with only " + iterations + " iterations");
+        }
         byte[] salt = new byte[SALT_BYTES];
         random.nextBytes(salt);
-        byte[] key = derive(password, salt, ITERATIONS);
+        byte[] key = derive(password, salt, iterations);
 
         Base64.Encoder encoder = Base64.getEncoder().withoutPadding();
-        return PREFIX + "$" + ITERATIONS
+        return PREFIX + "$" + iterations
                 + "$" + encoder.encodeToString(salt)
                 + "$" + encoder.encodeToString(key);
     }

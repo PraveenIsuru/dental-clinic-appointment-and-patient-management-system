@@ -1,0 +1,17 @@
+package lk.icbt.dentalclinic.dao;
+
+import lk.icbt.dentalclinic.model.Treatment;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface TreatmentDao {
+
+    Optional<Treatment> findById(int treatmentId);
+
+    Optional<Treatment> findByCode(String code);
+
+    List<Treatment> findAll();
+
+    List<Treatment> findActive();
+}
