@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.sunrisedentalclinic.controller.LoginController"
+            stylesheets="@clinic.css" styleClass="login-root">
+    <center>
+        <VBox maxWidth="360" spacing="14" alignment="CENTER_LEFT" styleClass="login-panel">
+            <Label text="SUNRISE DENTAL CLINIC" styleClass="login-wordmark"/>
+            <Region prefHeight="14"/>
+            <Label text="Welcome back" styleClass="login-title"/>
+            <Label text="Sign in to continue to your clinic dashboard." styleClass="muted"/>
+            <Region prefHeight="8"/>
+            <Label text="Username" styleClass="field-caption"/>
+            <TextField fx:id="txtUsername" promptText="Enter your username" prefHeight="42" maxWidth="Infinity"/>
+            <Label text="Password" styleClass="field-caption"/>
+            <PasswordField fx:id="txtPassword" promptText="Enter your password" prefHeight="42" maxWidth="Infinity" onAction="#login"/>
+            <Button text="Sign in" onAction="#login" maxWidth="Infinity" prefHeight="46" styleClass="primary-large"/>
+            <Label fx:id="lblMessage" wrapText="true" maxWidth="Infinity" minHeight="20" styleClass="error-label"/>
+            <Region prefHeight="10"/>
+            <Label text="A simple, reliable workspace for your clinic team, patients and appointments." wrapText="true" styleClass="login-tagline"/>
+        </VBox>
+    </center>
+    <padding>
+        <Insets top="35" right="35" bottom="35" left="35"/>
+    </padding>
+</BorderPane>
