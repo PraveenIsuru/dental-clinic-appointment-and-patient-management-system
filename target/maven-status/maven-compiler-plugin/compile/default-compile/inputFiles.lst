@@ -1,16 +1,1 @@
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\controller\DashboardController.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\controller\LoginController.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\dao\ClinicDAO.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\dao\UserDAO.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\Appointment.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\Dentist.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\Patient.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\SupportTicket.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\Treatment.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\model\User.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\service\AppointmentService.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\service\AuthenticationService.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\service\BillingService.java
 C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\SunriseDentalClinic.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\util\DBConnection.java
-C:\MyApps\dental-clinic-appointment-and-patient-management-system\src\main\java\com\mycompany\sunrisedentalclinic\util\PasswordUtil.java
