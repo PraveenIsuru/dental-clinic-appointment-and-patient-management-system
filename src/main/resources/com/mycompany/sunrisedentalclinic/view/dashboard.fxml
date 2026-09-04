@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
@@ -66,46 +65,34 @@
                                         <Label text="Monitor clinic activity and daily operations in one place." styleClass="muted"/>
                                     </VBox>
 
-                                    <HBox spacing="14">
-                                        <VBox spacing="6" styleClass="metric-card" HBox.hgrow="ALWAYS">
-                                            <Label text="TODAY'S VISITS" styleClass="metric-label"/>
+                                    <VBox spacing="0" styleClass="section-card,stat-list">
+                                        <HBox styleClass="stat-row" alignment="CENTER_LEFT">
+                                            <VBox spacing="2">
+                                                <Label text="TODAY'S VISITS" styleClass="metric-label"/>
+                                                <Label text="Scheduled today" styleClass="metric-note"/>
+                                            </VBox>
+                                            <Pane HBox.hgrow="ALWAYS"/>
                                             <Label fx:id="metricToday" text="0" styleClass="metric-value"/>
-                                            <Label text="Scheduled today" styleClass="metric-note"/>
-                                        </VBox>
-                                        <VBox spacing="6" styleClass="metric-card" HBox.hgrow="ALWAYS">
-                                            <Label text="TOTAL APPOINTMENTS" styleClass="metric-label"/>
+                                        </HBox>
+                                        <Separator/>
+                                        <HBox styleClass="stat-row" alignment="CENTER_LEFT">
+                                            <VBox spacing="2">
+                                                <Label text="TOTAL APPOINTMENTS" styleClass="metric-label"/>
+                                                <Label text="Current results" styleClass="metric-note"/>
+                                            </VBox>
+                                            <Pane HBox.hgrow="ALWAYS"/>
                                             <Label fx:id="metricAppointments" text="0" styleClass="metric-value"/>
-                                            <Label text="Current results" styleClass="metric-note"/>
-                                        </VBox>
-                                        <VBox spacing="6" styleClass="metric-card" HBox.hgrow="ALWAYS">
-                                            <Label text="PATIENTS" styleClass="metric-label"/>
+                                        </HBox>
+                                        <Separator/>
+                                        <HBox styleClass="stat-row" alignment="CENTER_LEFT">
+                                            <VBox spacing="2">
+                                                <Label text="PATIENTS" styleClass="metric-label"/>
+                                                <Label text="Registered records" styleClass="metric-note"/>
+                                            </VBox>
+                                            <Pane HBox.hgrow="ALWAYS"/>
                                             <Label fx:id="metricPatients" text="0" styleClass="metric-value"/>
-                                            <Label text="Registered records" styleClass="metric-note"/>
-                                        </VBox>
-                                        <VBox spacing="6" styleClass="metric-card" HBox.hgrow="ALWAYS">
-                                            <Label text="TREATMENTS" styleClass="metric-label"/>
-                                            <Label fx:id="metricTreatments" text="0" styleClass="metric-value"/>
-                                            <Label text="Available services" styleClass="metric-note"/>
-                                        </VBox>
-                                    </HBox>
-
-                                    <HBox spacing="14" prefHeight="285">
-                                        <VBox spacing="8" styleClass="chart-card" HBox.hgrow="ALWAYS">
-                                            <Label text="Appointments by Date" styleClass="card-title"/>
-                                            <BarChart fx:id="appointmentsChart" legendVisible="false" animated="false" VBox.vgrow="ALWAYS">
-                                                <xAxis>
-                                                    <CategoryAxis label="Date"/>
-                                                </xAxis>
-                                                <yAxis>
-                                                    <NumberAxis label="Appointments" forceZeroInRange="true" tickUnit="1"/>
-                                                </yAxis>
-                                            </BarChart>
-                                        </VBox>
-                                        <VBox spacing="8" styleClass="chart-card" HBox.hgrow="ALWAYS">
-                                            <Label text="Appointment Status" styleClass="card-title"/>
-                                            <PieChart fx:id="statusChart" labelsVisible="true" animated="false" VBox.vgrow="ALWAYS"/>
-                                        </VBox>
-                                    </HBox>
+                                        </HBox>
+                                    </VBox>
 
                                     <VBox spacing="10" styleClass="section-card" VBox.vgrow="ALWAYS">
                                         <HBox alignment="CENTER_LEFT">
@@ -443,7 +430,6 @@
                                             <Pane HBox.hgrow="ALWAYS"/>
                                             <HBox spacing="8">
                                                 <Button fx:id="bPrintButton" text="Print" onAction="#printReceipt" styleClass="secondary" disable="true"/>
-                                                <Button fx:id="bPdfButton" text="Open PDF" onAction="#openReceiptPdf" styleClass="secondary" disable="true"/>
                                             </HBox>
                                         </HBox>
                                         <ScrollPane fitToWidth="true"

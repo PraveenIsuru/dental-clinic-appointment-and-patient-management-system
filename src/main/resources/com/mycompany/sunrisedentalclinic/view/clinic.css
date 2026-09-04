@@ -417,6 +417,12 @@
     -fx-padding: 18px;
     -fx-min-width: 150px;
 }
+.stat-list {
+    -fx-padding: 6px 16px;
+}
+.stat-row {
+    -fx-padding: 14px 0;
+}
 .metric-label {
     -fx-text-fill: #64748b;
     -fx-font-size: 14px;

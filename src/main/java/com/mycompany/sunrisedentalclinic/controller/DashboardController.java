@@ -15,9 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.print.PrinterJob;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -45,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class DashboardController {
 
@@ -72,15 +68,6 @@ public class DashboardController {
 
     @FXML
     private Label metricPatients;
-
-    @FXML
-    private Label metricTreatments;
-
-    @FXML
-    private BarChart<String, Number> appointmentsChart;
-
-    @FXML
-    private PieChart statusChart;
 
     @FXML
     private TableView<Appointment> overviewTable;
@@ -279,9 +266,7 @@ public class DashboardController {
     private Label bTreatmentAmount, bTotalAmount;
 
     @FXML
-    private Button bPrintButton, bPdfButton;
-
-    private Path lastReceiptPdf;
+    private Button bPrintButton;
 
     // =========================================================
     // TREATMENTS
@@ -1615,37 +1600,9 @@ public class DashboardController {
         metricPatients.setText(patientTable == null
                 ? "0"
                 : String.valueOf(patientTable.getItems().size()));
-        metricTreatments.setText(treatmentTable == null
-                ? "0"
-                : String.valueOf(treatmentTable.getItems().size()));
 
         overviewTable.setItems(FXCollections.observableArrayList(
                 appointments.stream().limit(8).toList()
-        ));
-
-        Map<LocalDate, Integer> byDate = new TreeMap<>();
-        Map<String, Integer> byStatus = new TreeMap<>();
-
-        for (Appointment appointment : appointments) {
-            byDate.merge(appointment.date(), 1, Integer::sum);
-            String status = appointment.status() == null
-                    ? "Unspecified"
-                    : appointment.status();
-            byStatus.merge(status, 1, Integer::sum);
-        }
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        byDate.entrySet().stream().limit(7).forEach(entry
-                -> series.getData().add(new XYChart.Data<>(
-                        entry.getKey().toString(), entry.getValue()))
-        );
-        appointmentsChart.getData().setAll(series);
-
-        statusChart.setData(FXCollections.observableArrayList(
-                byStatus.entrySet().stream()
-                        .map(entry -> new PieChart.Data(
-                        entry.getKey(), entry.getValue()))
-                        .toList()
         ));
     }
 
@@ -1925,10 +1882,9 @@ public class DashboardController {
                         "Cash"
                 );
             }
-            lastReceiptPdf = createReceiptPdf(billId, appointment, consultation,
+            createReceiptPdf(billId, appointment, consultation,
                     treatmentCharge, total, paymentMethod, cardLast4);
             bPrintButton.setDisable(false);
-            bPdfButton.setDisable(false);
             bAppointment.setValue(null);
             bAppointment.setItems(FXCollections.observableArrayList(dao.unpaidAppointments()));
             bConsultation.clear();
@@ -1944,7 +1900,6 @@ public class DashboardController {
             information("CARD".equals(paymentMethod)
                     ? "Card payment successful. Receipt PDF created."
                     : "Cash payment recorded successfully. Receipt PDF created.");
-            openPdf(lastReceiptPdf);
         } catch (Exception e) {
             error(e);
         }
@@ -2115,17 +2070,6 @@ public class DashboardController {
             // The receipt remains available through the Open PDF button.
         }
         return false;
-    }
-
-    @FXML
-    private void openReceiptPdf() {
-        if (lastReceiptPdf == null || !Files.exists(lastReceiptPdf)) {
-            error(new IllegalArgumentException("Complete a payment to create the receipt PDF first."));
-            return;
-        }
-        if (!openPdf(lastReceiptPdf)) {
-            information("Receipt saved to " + lastReceiptPdf.toAbsolutePath());
-        }
     }
 
     @FXML
